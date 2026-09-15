@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 
 const Header = () => {
@@ -15,28 +16,25 @@ const Header = () => {
         <h2>ShopKart</h2>
       </div>
 
-      <nav className="nav">
-        <a href="#">Home</a>
-        <a href="#">Products</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-      </nav>
+    <nav className="nav">
+     <Link to="/">Home</Link>
+     <Link to="/products">Products</Link>
+     <Link to="/cart">Cart</Link>
+    </nav>
 
-      <div className="cart">
+<Link to="/cart" className="cart">
+  <span className="cart-icon">
+    🛒
+  </span>
 
-        <span className="cart-icon">
-          🛒
-        </span>
+  <span>
+    Cart
+  </span>
 
-        <span>
-          Cart
-        </span>
-
-        <span className="cart-count">
-          {cartItems.length}
-        </span>
-
-      </div>
+  <span className="cart-count">
+    {cartItems.length}
+  </span>
+</Link>
 
     </header>
   )

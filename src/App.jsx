@@ -1,64 +1,47 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+
 import Header from "./components/Header"
-import Product from "./components/Product"
+import Home from "./pages/Home"
+import Products from "./pages/Products"
 import Cart from "./pages/Cart"
+import ProductDetails from "./pages/ProductDetails"
+import NotFound from "./pages/NotFound"
 
 import "./App.css"
 
-
 const App = () => {
-
-  const products = [
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      price: 1999,
-      image: "https://tse2.mm.bing.net/th/id/OIP.U57NAojmfYXq3vIQ7Rk0YQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3/200x200"
-    },
-
-    {
-      id: 2,
-      name: "Smart Watch",
-      price: 2999,
-      image: "https://th.bing.com/th/id/OIP.vdg6G-Iqm44cFkNa1gxhyAHaHa?w=193&h=193&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3/200x200"
-    },
-
-    {
-      id: 3,
-      name: "Keyboard",
-      price: 1499,
-      image: "https://th.bing.com/th/id/OIP.pqKuvHNrSVU1q_B15x5eLAHaFI?w=276&h=191&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3/200x200"
-    }
-  ]
-
-
   return (
-    <div>
-
+    <BrowserRouter>
       <Header />
 
+      <Routes>
+        <Route
+          path="/"
+          element={<Home />}
+        />
 
-      <div className="products">
+        <Route
+          path="/products"
+          element={<Products />}
+        />
 
-        {products.map((product) => (
+        <Route
+          path="/products/:id"
+          element={<ProductDetails />}
+        />
 
-          <Product
-            key={product.id}
-            product={product}
-          />
+        <Route
+          path="/cart"
+          element={<Cart />}
+        />
 
-        ))}
-
-      </div>
-
-
-      <Cart />
-
-    </div>
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
-
 export default App
-
-
-
