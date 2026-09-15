@@ -1,6 +1,6 @@
 import Header from "./components/Header"
 import Product from "./components/Product"
-import AddToCart from "./components/AddToCart"
+import Cart from "./pages/Cart"
 
 import "./App.css"
 
@@ -51,7 +51,7 @@ const App = () => {
       </div>
 
 
-      <AddToCart />
+      <Cart />
 
     </div>
   )

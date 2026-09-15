@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { removeFromCart, clearCart } from "../../redux/slice.js"
 
 
-const AddToCart = () => {
+const Cart = () => {
 
   const cartItems = useSelector(
     (state) => state.cart.cartItems
@@ -84,5 +84,5 @@ const AddToCart = () => {
 }
 
 
-export default AddToCart
+export default Cart
 
