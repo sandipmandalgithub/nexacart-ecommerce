@@ -1,6 +1,6 @@
-import Header from "./Header"
-import Product from "./Product"
-import AddToCart from "./AddToCart"
+import Header from "./components/Header"
+import Product from "./components/Product"
+import AddToCart from "./components/AddToCart"
 
 import "./App.css"
 
