@@ -18,14 +18,33 @@ const Checkout = () => {
 
   const totalPrice = cartItems.reduce(
     (total, item) =>
-      total + item.price * item.quantity,
-    0
+      total + item.price * item.quantity,0
   )
 
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [address, setAddress] = useState("")
   const [phone, setPhone] = useState("")
+  const [orderPlaced, setOrderPlaced] = useState(false)
+
+
+  if (orderPlaced) {
+  return (
+    <div className="success-container">
+      <div className="success-icon">✅</div>
+
+      <h1>Order Placed Successfully!</h1>
+
+      <p>
+        Thank you for your purchase.Your order has been placed successfully.
+      </p>
+
+      <Link to="/products">
+        Continue Shopping
+      </Link>
+    </div>
+  )
+}
 
   // If cart is empty
   if (cartItems.length === 0) {
@@ -63,7 +82,7 @@ const Checkout = () => {
 
     dispatch(clearCart())
 
-    alert("Order placed successfully!")
+    setOrderPlaced(true)
   }
 
   return (
