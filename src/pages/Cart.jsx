@@ -15,9 +15,10 @@ const Cart = () => {
 
   const dispatch = useDispatch()
   const totalPrice = cartItems.reduce(
-  (total, item) => total + item.price * item.quantity,
-  0
-)
+  (total, item) => total + item.price * item.quantity,0)
+
+  const totalItems = cartItems.reduce(
+  (total, item) => total + item.quantity,0)
 
   return (
     <div className="cart-container">
@@ -74,14 +75,12 @@ const Cart = () => {
             </div>
           ))}
 
-        <h3>
-        Total: ₹{totalPrice}
-        </h3>
-        <button
-            onClick={() => dispatch(clearCart())}
-          >
-            Clear Cart
-        </button>
+      <div className="order-summary">
+        <h3>Order Summary</h3>
+        <p>Total Items: {totalItems}</p><p>Total Price: ₹{totalPrice}</p>
+
+        <button onClick={() => dispatch(clearCart())}>Clear Cart</button>
+      </div>
 
         
         </>

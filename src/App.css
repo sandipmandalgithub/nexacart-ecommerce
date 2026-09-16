@@ -214,3 +214,24 @@ body {
 .products-page select {
   min-width: 180px;
 }
+
+.order-summary {
+  max-width: 400px;
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.order-summary h3 {
+  margin-bottom: 15px;
+}
+
+.order-summary p {
+  margin: 10px 0;
+}
+
+.order-summary button {
+  margin-top: 10px;
+}
