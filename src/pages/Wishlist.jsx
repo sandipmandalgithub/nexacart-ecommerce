@@ -3,6 +3,8 @@ import {
   useDispatch
 } from "react-redux"
 
+import { useNavigate } from "react-router-dom"
+
 import {
   removeFromWishlist,
   addToCart
@@ -14,6 +16,7 @@ const Wishlist = () => {
   )
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   return (
     <div className="wishlist-container">
@@ -21,10 +24,22 @@ const Wishlist = () => {
         My Wishlist
       </h2>
 
-      {wishlistItems.length === 0 ? (
-        <p>
-          Your wishlist is empty
-        </p>
+  {wishlistItems.length === 0 ? (
+  <div className="empty-state">
+    <div className="empty-state-icon">❤️</div>
+
+    <h2>Your Wishlist is Empty</h2>
+
+    <p>
+      Save products you love and find them here later.
+    </p>
+
+    <button
+     onClick={() => navigate("/products")}
+    >
+      Explore Products
+    </button>
+  </div>
       ) : (
         wishlistItems.map((item) => (
           <div

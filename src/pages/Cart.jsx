@@ -35,10 +35,20 @@ const Cart = () => {
         Shopping Cart
       </h2>
 
-      {cartItems.length === 0 ? (
-        <p>
-          Your cart is empty
-        </p>
+  {cartItems.length === 0 ? (
+  <div className="empty-state">
+    <div className="empty-state-icon">🛒</div>
+
+    <h2>Your Cart is Empty</h2>
+
+    <p>
+      Looks like you haven't added anything to your cart yet.
+    </p>
+
+    <button onClick={() => navigate("/products")}>
+      Continue Shopping
+    </button>
+  </div>
       ) : (
         <>
           {cartItems.map((item) => (
