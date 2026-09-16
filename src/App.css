@@ -586,3 +586,31 @@ body {
     display: flex;
   }
 }
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.quantity-selector button {
+  width: 35px;
+  height: 35px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.quantity-selector button:hover {
+  background: #f2f2f2;
+}
+
+.quantity-selector span {
+  min-width: 25px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}

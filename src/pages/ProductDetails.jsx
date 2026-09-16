@@ -19,6 +19,7 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [selectedImage, setSelectedImage] = useState("")
+  const [quantity, setQuantity] = useState(1)
 
   const wishlistItems = useSelector(
     (state) => state.cart.wishlistItems
@@ -139,13 +140,44 @@ const ProductDetails = () => {
           {product.description}
         </p>
 
-        <button
-          onClick={() =>
-            dispatch(addToCart(product))
-          }
-        >
-          Add To Cart
-        </button>
+
+ <div className="quantity-selector">
+
+  <button
+    onClick={() =>
+      setQuantity((quantity) =>
+        Math.max(1, quantity - 1)
+      )
+    }
+  >
+    -
+  </button>
+
+  <span>
+    {quantity}
+  </span>
+
+  <button
+    onClick={() =>
+      setQuantity((quantity) =>
+        Math.min(product.stock, quantity + 1)
+      )
+    }
+  >
+    +
+  </button>
+
+</div>
+
+ <button
+  onClick={() => {
+    for (let i = 0; i < quantity; i++) {
+      dispatch(addToCart(product))
+    }
+  }}
+>
+  Add To Cart
+</button>
 
         <button
           onClick={() =>
