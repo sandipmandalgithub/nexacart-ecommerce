@@ -15,18 +15,18 @@ const ProductDetails = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
 
-  const wishlistItems = useSelector(
-  (state) => state.cart.wishlistItems
-)
-
-const isWishlisted = wishlistItems.some(
-  (item) => item.id === product?.id
-)
-
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [selectedImage, setSelectedImage] = useState("")
+
+  const wishlistItems = useSelector(
+    (state) => state.cart.wishlistItems
+  )
+
+  const isWishlisted = wishlistItems.some(
+    (item) => item.id === product?.id
+  )
 
   useEffect(() => {
     axios
@@ -37,6 +37,7 @@ const isWishlisted = wishlistItems.some(
       })
       .catch((error) => {
         console.log(error)
+
         setError(
           "Failed to load product details. Please try again."
         )
@@ -78,27 +79,29 @@ const isWishlisted = wishlistItems.some(
     )
   }
 
-return (
-<div className="product-details">
-<div className="product-details-image">
-  <img
-    src={selectedImage}
-    alt={product.title}
-  />
+  return (
+    <div className="product-details">
 
-  <div className="product-thumbnails">
-    {product.images?.map((image) => (
-      <img
-        key={image}
-        src={image}
-        alt={product.title}
-        onClick={() => setSelectedImage(image)}
-      />
-    ))}
-  </div>
-</div>
+      <div className="product-details-image">
+        <img
+          src={selectedImage}
+          alt={product.title}
+        />
+
+        <div className="product-thumbnails">
+          {product.images?.map((image) => (
+            <img
+              key={image}
+              src={image}
+              alt={product.title}
+              onClick={() => setSelectedImage(image)}
+            />
+          ))}
+        </div>
+      </div>
 
       <div className="product-details-info">
+
         <h1>
           {product.title}
         </h1>
@@ -131,24 +134,24 @@ return (
           {product.description}
         </p>
 
-      <button
+        <button
           onClick={() =>
             dispatch(addToCart(product))
           }
         >
           Add To Cart
-      </button>
+        </button>
 
-<button
-  onClick={() => {
-    dispatch(addToWishlist(product))
-  }}
-  disabled={isWishlisted}
->
-  {isWishlisted
-    ? "❤️ Wishlisted"
-    : "♡ Add To Wishlist"}
-</button>
+        <button
+          onClick={() =>
+            dispatch(addToWishlist(product))
+          }
+          disabled={isWishlisted}
+        >
+          {isWishlisted
+            ? "❤️ Wishlisted"
+            : "♡ Add To Wishlist"}
+        </button>
 
         <Link to="/cart">
           Go To Cart
@@ -159,9 +162,12 @@ return (
         <Link to="/products">
           Back to Products
         </Link>
+
       </div>
+
     </div>
   )
 }
 
 export default ProductDetails
+
