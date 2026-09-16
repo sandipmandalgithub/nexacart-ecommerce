@@ -235,3 +235,89 @@ body {
 .order-summary button {
   margin-top: 10px;
 }
+
+
+.checkout-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.checkout-container h1 {
+  margin-bottom: 10px;
+}
+
+.checkout-container > p {
+  margin-bottom: 25px;
+  color: #666;
+}
+
+.checkout-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.checkout-container form div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkout-container label {
+  font-weight: 600;
+}
+
+.checkout-container input,
+.checkout-container textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+}
+
+.checkout-container input:focus,
+.checkout-container textarea:focus {
+  border-color: #333;
+}
+
+.checkout-container textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.checkout-container button {
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.checkout-summary {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.checkout-summary h2 {
+  margin-bottom: 20px;
+}
+
+.checkout-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.checkout-summary h3 {
+  margin-top: 20px;
+  text-align: right;
+}

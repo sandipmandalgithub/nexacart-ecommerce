@@ -7,6 +7,7 @@ import Cart from "./pages/Cart"
 import ProductDetails from "./pages/ProductDetails"
 import NotFound from "./pages/NotFound"
 import Wishlist from "./pages/Wishlist"
+import Checkout from "./pages/Checkout"
 
 import "./App.css"
 
@@ -34,6 +35,11 @@ const App = () => {
         <Route
           path="/cart"
           element={<Cart />}
+        />
+        
+        <Route
+          path="/checkout"
+          element={<Checkout />}
         />
 
         <Route
