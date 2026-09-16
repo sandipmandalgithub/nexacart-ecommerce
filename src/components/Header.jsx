@@ -1,8 +1,11 @@
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import { useState } from "react"
 
 
 const Header = () => {
+
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const cartItems = useSelector(
     (state) => state.cart.cartItems
@@ -22,11 +25,18 @@ const Header = () => {
     <h2>NexaCart</h2>
     </Link>
 
-    <nav className="nav">
-     <Link to="/">Home</Link>
-     <Link to="/products">Products</Link>
-     <Link to="/wishlist">Wishlist({wishlistItems.length})</Link>
-     <Link to="/cart">Cart</Link>
+<button
+  className="menu-button"
+  onClick={() => setMenuOpen(!menuOpen)}
+>
+  ☰
+</button>
+
+    <nav className={`nav ${menuOpen ? "nav-open" : ""}`}>
+     <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+     <Link to="/products" onClick={() => setMenuOpen(false)}>Products</Link>
+     <Link to="/wishlist" onClick={() => setMenuOpen(false)}>Wishlist ({wishlistItems.length})</Link>
+     <Link to="/cart" onClick={() => setMenuOpen(false)}>Cart</Link>
     </nav>
 
 <Link to="/cart" className="cart">
