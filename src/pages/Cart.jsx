@@ -4,7 +4,8 @@ import {
   increaseQuantity,
   decreaseQuantity,
   removeFromCart,
-  clearCart
+  clearCart,
+  addToWishlist
 } from "../../redux/slice.js"
 
 const Cart = () => {
@@ -53,34 +54,22 @@ const Cart = () => {
                 </p>
 
                 <div>
-                  <button
-                    onClick={() =>
-                      dispatch(decreaseQuantity(item.id))
-                    }
-                  >
-                    -
-                  </button>
+                  <button onClick={() =>dispatch(decreaseQuantity(item.id))}>-</button>
 
                   <span>
                     {item.quantity}
                   </span>
 
-                  <button
-                    onClick={() =>
-                      dispatch(increaseQuantity(item.id))
-                    }
-                  >
-                    +
-                  </button>
+                  <button onClick={() =>dispatch(increaseQuantity(item.id))}>+</button>
                 </div>
 
-                <button
-                  onClick={() =>
-                    dispatch(removeFromCart(item.id))
-                  }
-                >
-                  Remove
-                </button>
+                <button onClick={() =>dispatch(removeFromCart(item.id))}>Remove</button>
+
+                <button onClick={() => {dispatch(addToWishlist(item))
+                   dispatch(removeFromCart(item.id))}}>Move to Wishlist</button>
+
+
+
               </div>
             </div>
           ))}
