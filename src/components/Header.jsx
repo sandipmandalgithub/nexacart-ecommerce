@@ -11,6 +11,9 @@ const Header = () => {
   (state) => state.cart.wishlistItems
   ) 
 
+  const totalCartItems = cartItems.reduce(
+  (total, item) => total + item.quantity,0)
+
 
   return (
     <header className="header">
@@ -35,9 +38,8 @@ const Header = () => {
     Cart
   </span>
 
-  <span className="cart-count">
-    {cartItems.length}
-  </span>
+  <span className="cart-count">{totalCartItems}</span>
+  
 </Link>
 
     </header>

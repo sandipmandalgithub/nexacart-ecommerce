@@ -1,61 +1,165 @@
 import { Link, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import {
+  useDispatch,
+  useSelector
+} from "react-redux"
 import axios from "axios"
 
-import { addToCart } from "../../redux/slice.js"
+import {
+  addToCart,
+  addToWishlist
+} from "../../redux/slice.js"
 
 const ProductDetails = () => {
-
   const { id } = useParams()
   const dispatch = useDispatch()
 
-  const [product, setProduct] = useState(null)
+  const wishlistItems = useSelector(
+  (state) => state.cart.wishlistItems
+)
 
-useEffect(() => {
-  axios
-    .get(`https://dummyjson.com/products/${id}`)
-    .then((response) => {
-      setProduct(response.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-}, [id])
+const isWishlisted = wishlistItems.some(
+  (item) => item.id === product?.id
+)
+
+  const [product, setProduct] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [selectedImage, setSelectedImage] = useState("")
+
+  useEffect(() => {
+    axios
+      .get(`https://dummyjson.com/products/${id}`)
+      .then((response) => {
+        setProduct(response.data)
+        setSelectedImage(response.data.thumbnail)
+      })
+      .catch((error) => {
+        console.log(error)
+        setError(
+          "Failed to load product details. Please try again."
+        )
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [id])
+
+  if (loading) {
+    return (
+      <div className="product-details">
+        <h1>Loading...</h1>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="product-details">
+        <h1>{error}</h1>
+
+        <Link to="/products">
+          Back to Products
+        </Link>
+      </div>
+    )
+  }
 
   if (!product) {
-  return <h1>Loading...</h1>
-}
+    return (
+      <div className="product-details">
+        <h1>Product not found</h1>
 
-  return (
-    <div>
+        <Link to="/products">
+          Back to Products
+        </Link>
+      </div>
+    )
+  }
+
+return (
+<div className="product-details">
+<div className="product-details-image">
+  <img
+    src={selectedImage}
+    alt={product.title}
+  />
+
+  <div className="product-thumbnails">
+    {product.images?.map((image) => (
       <img
-        src={product.thumbnail}
+        key={image}
+        src={image}
         alt={product.title}
+        onClick={() => setSelectedImage(image)}
       />
+    ))}
+  </div>
+</div>
 
-      <h1>
-        {product.title}
-      </h1>
+      <div className="product-details-info">
+        <h1>
+          {product.title}
+        </h1>
 
-      <h2>
-        ₹{product.price}
-      </h2>
+        <p>
+          Brand: {product.brand || "N/A"}
+        </p>
 
-      <p>
-        {product.description}
-      </p>
+        <p>
+          Category: {product.category}
+        </p>
+
+        <p>
+          Rating: ⭐ {product.rating}
+        </p>
+
+        <p>
+          Stock: {product.stock}
+        </p>
+
+        <h2>
+          ₹{product.price}
+        </h2>
+
+        <p>
+          Discount: {product.discountPercentage}%
+        </p>
+
+        <p>
+          {product.description}
+        </p>
 
       <button
-        onClick={() => dispatch(addToCart(product))}
-      >
-        Add To Cart
+          onClick={() =>
+            dispatch(addToCart(product))
+          }
+        >
+          Add To Cart
       </button>
 
-      <Link to="/cart">
-      Go To Cart
-      </Link> 
+<button
+  onClick={() => {
+    dispatch(addToWishlist(product))
+  }}
+  disabled={isWishlisted}
+>
+  {isWishlisted
+    ? "❤️ Wishlisted"
+    : "♡ Add To Wishlist"}
+</button>
 
+        <Link to="/cart">
+          Go To Cart
+        </Link>
+
+        <br />
+
+        <Link to="/products">
+          Back to Products
+        </Link>
+      </div>
     </div>
   )
 }

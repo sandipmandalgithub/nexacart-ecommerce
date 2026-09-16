@@ -15,30 +15,43 @@ const Products = () => {
   const [error, setError] = useState("")
 
   const [currentPage, setCurrentPage] = useState(1)
-  const [totalProducts, setTotalProducts] = useState(0)
 
   const productsPerPage = 30
 
   // Fetch products
-  useEffect(() => {
-  const skip = (currentPage - 1) * productsPerPage
+  const fetchProducts = () => {
+    setLoading(true)
+    setError("")
 
-  axios
-    .get(
-      `https://dummyjson.com/products?limit=${productsPerPage}&skip=${skip}`
-    )
-    .then((response) => {
-      setProducts(response.data.products)
-      setTotalProducts(response.data.total)
-    })
-    .catch((error) => {
-      console.log(error)
-      setError("Failed to load products. Please try again.")
-    })
-    .finally(() => {
-      setLoading(false)
-    })
-  }, [currentPage])
+    axios
+      .get("https://dummyjson.com/products?limit=0")
+      .then((response) => {
+        setProducts(response.data.products)
+      })
+      .catch((error) => {
+        console.log(error)
+        setError("Failed to load products. Please try again.")
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
+  // Initial products load
+  useEffect(() => {
+    axios
+      .get("https://dummyjson.com/products?limit=0")
+      .then((response) => {
+        setProducts(response.data.products)
+      })
+      .catch((error) => {
+        console.log(error)
+        setError("Failed to load products. Please try again.")
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
 
   // Fetch categories
   useEffect(() => {
@@ -51,30 +64,6 @@ const Products = () => {
         console.log(error)
       })
   }, [])
-
-  // Retry current page
-  const handleRetry = () => {
-    const skip = (currentPage - 1) * productsPerPage
-
-    setLoading(true)
-    setError("")
-
-    axios
-      .get(
-        `https://dummyjson.com/products?limit=${productsPerPage}&skip=${skip}`
-      )
-      .then((response) => {
-        setProducts(response.data.products)
-        setTotalProducts(response.data.total)
-      })
-      .catch((error) => {
-        console.log(error)
-        setError("Failed to load products. Please try again.")
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }
 
   // Search and category filtering
   const filteredProducts = products.filter((product) => {
@@ -104,7 +93,16 @@ const Products = () => {
 
   // Total pages
   const totalPages = Math.ceil(
-    totalProducts / productsPerPage
+    sortedProducts.length / productsPerPage
+  )
+
+  // Current page products
+  const startIndex =
+    (currentPage - 1) * productsPerPage
+
+  const currentProducts = sortedProducts.slice(
+    startIndex,
+    startIndex + productsPerPage
   )
 
   return (
@@ -116,13 +114,19 @@ const Products = () => {
         type="text"
         placeholder="Search products..."
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={(e) => {
+          setSearchTerm(e.target.value)
+          setCurrentPage(1)
+        }}
       />
 
       {/* Category Filter */}
       <select
         value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
+        onChange={(e) => {
+          setSelectedCategory(e.target.value)
+          setCurrentPage(1)
+        }}
       >
         <option value="All">
           All Categories
@@ -141,7 +145,10 @@ const Products = () => {
       {/* Sorting */}
       <select
         value={sortOption}
-        onChange={(e) => setSortOption(e.target.value)}
+        onChange={(e) => {
+          setSortOption(e.target.value)
+          setCurrentPage(1)
+        }}
       >
         <option value="default">
           Sort By
@@ -160,11 +167,10 @@ const Products = () => {
       {loading ? (
         <p>Loading products...</p>
       ) : error ? (
-        // Error
         <div>
           <p>{error}</p>
 
-          <button onClick={handleRetry}>
+          <button onClick={fetchProducts}>
             Retry
           </button>
         </div>
@@ -172,8 +178,8 @@ const Products = () => {
         <>
           {/* Products */}
           <div className="products">
-            {sortedProducts.length > 0 ? (
-              sortedProducts.map((product) => (
+            {currentProducts.length > 0 ? (
+              currentProducts.map((product) => (
                 <Product
                   key={product.id}
                   product={product}
@@ -185,29 +191,37 @@ const Products = () => {
           </div>
 
           {/* Pagination */}
-          <div className="pagination">
-            <button
-              onClick={() =>
-                setCurrentPage((page) => page - 1)
-              }
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button
+                onClick={() =>
+                  setCurrentPage(
+                    (page) => page - 1
+                  )
+                }
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
 
-            <span>
-              Page {currentPage} of {totalPages}
-            </span>
+              <span>
+                Page {currentPage} of {totalPages}
+              </span>
 
-            <button
-              onClick={() =>
-                setCurrentPage((page) => page + 1)
-              }
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>
+              <button
+                onClick={() =>
+                  setCurrentPage(
+                    (page) => page + 1
+                  )
+                }
+                disabled={
+                  currentPage === totalPages
+                }
+              >
+                Next
+              </button>
+            </div>
+          )}
         </>
       )}
     </div>
@@ -215,3 +229,4 @@ const Products = () => {
 }
 
 export default Products
+

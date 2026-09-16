@@ -18,10 +18,16 @@ const Cart = () => {
   const navigate = useNavigate()
 
   const totalPrice = cartItems.reduce(
-  (total, item) => total + item.price * item.quantity,0)
+    (total, item) =>
+      total + item.price * item.quantity,
+    0
+  )
 
   const totalItems = cartItems.reduce(
-  (total, item) => total + item.quantity,0)
+    (total, item) =>
+      total + item.quantity,
+    0
+  )
 
   return (
     <div className="cart-container">
@@ -41,53 +47,106 @@ const Cart = () => {
               key={item.id}
             >
               <img
-                src={item.image}
-                alt={item.name}
+                src={item.thumbnail}
+                alt={item.title}
               />
 
               <div>
                 <h3>
-                  {item.name}
+                  {item.title}
                 </h3>
 
                 <p>
                   ₹{item.price}
                 </p>
+
                 <p>
-                   Subtotal: ₹{item.price * item.quantity}
+                  Subtotal: ₹
+                  {item.price * item.quantity}
                 </p>
 
                 <div>
-                  <button onClick={() =>dispatch(decreaseQuantity(item.id))}>-</button>
+                  <button
+                    onClick={() =>
+                      dispatch(
+                        decreaseQuantity(item.id)
+                      )
+                    }
+                  >
+                    -
+                  </button>
 
                   <span>
                     {item.quantity}
                   </span>
 
-                  <button onClick={() =>dispatch(increaseQuantity(item.id))}>+</button>
+                  <button
+                    onClick={() =>
+                      dispatch(
+                        increaseQuantity(item.id)
+                      )
+                    }
+                  >
+                    +
+                  </button>
                 </div>
 
-                <button onClick={() =>dispatch(removeFromCart(item.id))}>Remove</button>
+                <button
+                  onClick={() =>
+                    dispatch(
+                      removeFromCart(item.id)
+                    )
+                  }
+                >
+                  Remove
+                </button>
 
-                <button onClick={() => {dispatch(addToWishlist(item))
-                   dispatch(removeFromCart(item.id))}}>Move to Wishlist</button>
+                <button
+                  onClick={() => {
+                    dispatch(
+                      addToWishlist(item)
+                    )
 
-
-
+                    dispatch(
+                      removeFromCart(item.id)
+                    )
+                  }}
+                >
+                  Move to Wishlist
+                </button>
               </div>
             </div>
           ))}
 
-      <div className="order-summary">
-        <h3>Order Summary</h3>
-        <p>Total Items: {totalItems}</p><p>Total Price: ₹{totalPrice}</p>
+          <div className="order-summary">
+            <h3>
+              Order Summary
+            </h3>
 
-        <button onClick={() => dispatch(clearCart())}>Clear Cart</button>
-        <button onClick={() => navigate("/checkout")}>Proceed to Checkout</button>
+            <p>
+              Total Items: {totalItems}
+            </p>
 
-      </div>
+            <p>
+              Total Price: ₹{totalPrice}
+            </p>
 
-        
+            <button
+              onClick={() =>
+                dispatch(clearCart())
+              }
+            >
+              Clear Cart
+            </button>
+
+            <button
+              onClick={() =>
+                navigate("/checkout")
+              }
+            >
+              Proceed to Checkout
+            </button>
+          </div>
         </>
       )}
     </div>

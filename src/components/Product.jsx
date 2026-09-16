@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom"
-import { useDispatch } from "react-redux"
+import {
+  useDispatch,
+  useSelector
+} from "react-redux"
 import { addToCart,addToWishlist } from "../../redux/slice.js"
 
 const Product = ({ product }) => {
   const dispatch = useDispatch()
+  const wishlistItems = useSelector(
+  (state) => state.cart.wishlistItems
+)
+
+const isWishlisted = wishlistItems.some(
+  (item) => item.id === product.id
+)
+
 
   return (
     <div className="product-card">
@@ -26,11 +37,14 @@ const Product = ({ product }) => {
         Add To Cart
       </button>
 
-      <button
-       onClick={() => dispatch(addToWishlist(product))}
-      >
-      ❤️ Add To Wishlist
-      </button>
+<button
+  onClick={() => dispatch(addToWishlist(product))}
+  disabled={isWishlisted}
+>
+  {isWishlisted
+    ? "❤️ Wishlisted"
+    : "♡ Add To Wishlist"}
+</button>
 
       <Link to={`/products/${product.id}`}>
         View Details
