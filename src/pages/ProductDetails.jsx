@@ -1,30 +1,41 @@
-import {Link, useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
+import axios from "axios"
 
 import { addToCart } from "../../redux/slice.js"
-import products from "../data/products"
 
 const ProductDetails = () => {
+
   const { id } = useParams()
   const dispatch = useDispatch()
 
-  const product = products.find(
-    (item) => item.id === Number(id)
-  )
+  const [product, setProduct] = useState(null)
+
+useEffect(() => {
+  axios
+    .get(`https://dummyjson.com/products/${id}`)
+    .then((response) => {
+      setProduct(response.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}, [id])
 
   if (!product) {
-    return <h1>Product Not Found</h1>
-  }
+  return <h1>Loading...</h1>
+}
 
   return (
     <div>
       <img
-        src={product.image}
-        alt={product.name}
+        src={product.thumbnail}
+        alt={product.title}
       />
 
       <h1>
-        {product.name}
+        {product.title}
       </h1>
 
       <h2>

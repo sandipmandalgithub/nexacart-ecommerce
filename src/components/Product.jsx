@@ -8,12 +8,12 @@ const Product = ({ product }) => {
   return (
     <div className="product-card">
       <img
-        src={product.image}
-        alt={product.name}
+        src={product.thumbnail}
+        alt={product.title}
       />
 
       <h3>
-        {product.name}
+        {product.title}
       </h3>
 
       <p>
