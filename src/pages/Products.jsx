@@ -6,6 +6,8 @@ import products from "../data/products"
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
+  const [sortOption, setSortOption] = useState("default")
+
 
   const filteredProducts = products.filter((product) => {
   const matchesSearch = product.name
@@ -17,6 +19,18 @@ const Products = () => {
     product.category === selectedCategory
 
   return matchesSearch && matchesCategory
+})
+
+const sortedProducts = [...filteredProducts].sort((a, b) => {
+  if (sortOption === "price-low") {
+    return a.price - b.price
+  }
+
+  if (sortOption === "price-high") {
+    return b.price - a.price
+  }
+
+  return 0
 })
 
   return (
@@ -39,9 +53,18 @@ const Products = () => {
       <option value="Accessories">Accessories</option>
     </select>
 
+    <select
+      value={sortOption}
+      onChange={(e) => setSortOption(e.target.value)}
+    >
+      <option value="default">Sort By</option>
+      <option value="price-low">Price: Low to High</option>
+      <option value="price-high">Price: High to Low</option>
+    </select>
+
   <div className="products">
-  {filteredProducts.length > 0 ? (
-    filteredProducts.map((product) => (
+  {sortedProducts.length > 0 ? (
+    sortedProducts.map((product) => (
       <Product
         key={product.id}
         product={product}

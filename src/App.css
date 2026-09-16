@@ -210,3 +210,7 @@ body {
 .products-page select:focus {
   border-color: #333;
 }
+
+.products-page select {
+  min-width: 180px;
+}
