@@ -6,6 +6,7 @@ import Products from "./pages/Products"
 import Cart from "./pages/Cart"
 import ProductDetails from "./pages/ProductDetails"
 import NotFound from "./pages/NotFound"
+import Wishlist from "./pages/Wishlist"
 
 import "./App.css"
 
@@ -33,6 +34,11 @@ const App = () => {
         <Route
           path="/cart"
           element={<Cart />}
+        />
+
+        <Route
+          path="/wishlist"
+          element={<Wishlist />}
         />
 
         <Route

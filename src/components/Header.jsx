@@ -7,6 +7,9 @@ const Header = () => {
   const cartItems = useSelector(
     (state) => state.cart.cartItems
   )
+  const wishlistItems = useSelector(
+  (state) => state.cart.wishlistItems
+  ) 
 
 
   return (
@@ -19,6 +22,7 @@ const Header = () => {
     <nav className="nav">
      <Link to="/">Home</Link>
      <Link to="/products">Products</Link>
+     <Link to="/wishlist">Wishlist({wishlistItems.length})</Link>
      <Link to="/cart">Cart</Link>
     </nav>
 
