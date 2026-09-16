@@ -614,3 +614,23 @@ body {
   font-size: 18px;
   font-weight: 600;
 }
+
+.stock-available {
+  color: green;
+  font-weight: 600;
+}
+
+.stock-low {
+  color: #d97706;
+  font-weight: 600;
+}
+
+.stock-out {
+  color: red;
+  font-weight: 600;
+}
+
+.cart-item button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

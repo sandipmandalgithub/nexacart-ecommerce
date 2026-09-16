@@ -124,10 +124,21 @@ const ProductDetails = () => {
           Rating: ⭐ {product.rating}
         </p>
 
-        <p>
-          Stock: {product.stock}
-        </p>
-
+<p
+  className={
+    product.stock === 0
+      ? "stock-out"
+      : product.stock <= 5
+      ? "stock-low"
+      : "stock-available"
+  }
+>
+  {product.stock === 0
+    ? "Out of Stock"
+    : product.stock <= 5
+    ? `Only ${product.stock} left in stock`
+    : `${product.stock} available`}
+</p>
         <h2>
           ₹{product.price}
         </h2>
@@ -158,25 +169,31 @@ const ProductDetails = () => {
   </span>
 
   <button
-    onClick={() =>
-      setQuantity((quantity) =>
-        Math.min(product.stock, quantity + 1)
-      )
-    }
-  >
-    +
-  </button>
-
+  onClick={() =>
+    setQuantity((quantity) =>
+      Math.min(product.stock, quantity + 1)
+    )
+  }
+  disabled={
+    quantity >= product.stock ||
+    product.stock === 0
+  }
+>
+  +
+</button>
 </div>
 
- <button
+<button
   onClick={() => {
     for (let i = 0; i < quantity; i++) {
       dispatch(addToCart(product))
     }
   }}
+  disabled={product.stock === 0}
 >
-  Add To Cart
+  {product.stock === 0
+    ? "Out of Stock"
+    : "Add To Cart"}
 </button>
 
         <button

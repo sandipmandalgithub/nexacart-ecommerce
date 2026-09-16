@@ -89,6 +89,18 @@ const Cart = () => {
                   ₹{item.price}
                 </p>
 
+<p
+  className={
+    item.quantity >= item.stock
+      ? "stock-low"
+      : "stock-available"
+  }
+>
+  {item.quantity >= item.stock
+    ? "Maximum available quantity added"
+    : `${item.stock - item.quantity} left in stock`}
+</p>
+
                 <p>
                   Subtotal: ₹
                   {item.price * item.quantity}
@@ -96,29 +108,31 @@ const Cart = () => {
 
                 <div>
 
-                  <button
-                    onClick={() =>
-                      dispatch(
-                        decreaseQuantity(item.id)
-                      )
-                    }
-                  >
-                    -
-                  </button>
+<button
+  onClick={() =>
+    dispatch(
+      decreaseQuantity(item.id)
+    )
+  }
+  disabled={item.quantity === 1}
+>
+  -
+</button>
 
                   <span>
                     {item.quantity}
                   </span>
 
-                  <button
-                    onClick={() =>
-                      dispatch(
-                        increaseQuantity(item.id)
-                      )
-                    }
-                  >
-                    +
-                  </button>
+<button
+  onClick={() =>
+    dispatch(
+      increaseQuantity(item.id)
+    )
+  }
+  disabled={item.quantity >= item.stock}
+>
+  +
+</button>
 
                 </div>
 
