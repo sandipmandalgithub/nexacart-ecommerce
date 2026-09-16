@@ -195,3 +195,18 @@ body {
 .products-page input:focus {
   border-color: #333;
 }
+
+.products-page select {
+  padding: 12px 15px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  background: white;
+  cursor: pointer;
+  outline: none;
+}
+
+.products-page select:focus {
+  border-color: #333;
+}
