@@ -165,15 +165,22 @@ const Products = () => {
 
       {/* Loading */}
       {loading ? (
-        <p>Loading products...</p>
-      ) : error ? (
-        <div>
-          <p>{error}</p>
-
-          <button onClick={fetchProducts}>
-            Retry
-          </button>
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Loading products...</p>
         </div>
+      ) : error ? (
+        <div className="error-container">
+        <div className="error-icon">⚠️</div>
+
+    <h2>Something went wrong</h2>
+
+    <p>{error}</p>
+
+    <button onClick={fetchProducts}>
+      Try Again
+    </button>
+  </div>
       ) : (
         <>
           {/* Products */}

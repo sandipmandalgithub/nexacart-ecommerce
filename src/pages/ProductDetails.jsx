@@ -48,24 +48,29 @@ const ProductDetails = () => {
   }, [id])
 
   if (loading) {
-    return (
-      <div className="product-details">
-        <h1>Loading...</h1>
-      </div>
-    )
-  }
+  return (
+    <div className="loading-container">
+      <div className="loading-spinner"></div>
+      <p>Loading product details...</p>
+    </div>
+  )
+}
 
   if (error) {
-    return (
-      <div className="product-details">
-        <h1>{error}</h1>
+  return (
+    <div className="error-container">
+      <div className="error-icon">⚠️</div>
 
-        <Link to="/products">
-          Back to Products
-        </Link>
-      </div>
-    )
-  }
+      <h2>Something went wrong</h2>
+
+      <p>{error}</p>
+
+      <Link to="/products">
+        Back to Products
+      </Link>
+    </div>
+  )
+}
 
   if (!product) {
     return (
