@@ -1775,3 +1775,151 @@ body {
     font-size: 18px;
   }
 }
+
+/* ================================
+   WISHLIST PAGE
+================================ */
+
+.wishlist-container {
+  max-width: 1100px;
+  margin: 50px auto;
+  padding: 0 30px;
+}
+
+.wishlist-container > h2 {
+  margin-bottom: 30px;
+  font-size: 32px;
+}
+
+/* ================================
+   WISHLIST ITEM
+================================ */
+
+.wishlist-item {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 30px;
+  margin-bottom: 20px;
+  padding: 25px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  background: white;
+  transition: 0.2s ease;
+}
+
+.wishlist-item:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.wishlist-item > img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.wishlist-item h3 {
+  margin: 0 0 15px;
+  font-size: 20px;
+}
+
+/* ================================
+   WISHLIST PRICE
+================================ */
+
+.wishlist-price {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.wishlist-original-price {
+  color: #999;
+  font-size: 15px;
+  text-decoration: line-through;
+}
+
+.wishlist-discounted-price {
+  color: #222;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.wishlist-discount-badge {
+  padding: 5px 9px;
+  border-radius: 5px;
+  background: #222;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ================================
+   WISHLIST BUTTONS
+================================ */
+
+.wishlist-item > div > button {
+  margin-right: 10px;
+  margin-top: 8px;
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  background: white;
+  color: #222;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.wishlist-item > div > button:hover {
+  background: #f3f3f3;
+  transform: translateY(-1px);
+}
+
+.wishlist-item > div > button:last-child {
+  border-color: #222;
+  background: #222;
+  color: white;
+}
+
+.wishlist-item > div > button:last-child:hover {
+  background: #000;
+}
+
+/* ================================
+   WISHLIST RESPONSIVE
+================================ */
+
+@media (max-width: 700px) {
+  .wishlist-container {
+    margin: 30px auto;
+    padding: 0 15px;
+  }
+
+  .wishlist-container > h2 {
+    font-size: 27px;
+  }
+
+  .wishlist-item {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 18px;
+  }
+
+  .wishlist-item > img {
+    width: 100%;
+    height: 220px;
+  }
+
+  .wishlist-item h3 {
+    font-size: 18px;
+  }
+
+  .wishlist-item > div > button {
+    margin-right: 5px;
+  }
+}
