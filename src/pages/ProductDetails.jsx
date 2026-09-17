@@ -34,6 +34,11 @@ const ProductDetails = () => {
     (item) => item.id === product?.id
   )
 
+  const discountedPrice = product
+  ? product.price -
+    (product.price * product.discountPercentage) / 100
+  : 0
+
   useEffect(() => {
     axios
       .get(`https://dummyjson.com/products/${id}`)
@@ -144,13 +149,21 @@ const ProductDetails = () => {
     ? `Only ${product.stock} left in stock`
     : `${product.stock} available`}
 </p>
-        <h2>
-          ₹{product.price}
-        </h2>
+        <div className="price-section">
 
-        <p>
-          Discount: {product.discountPercentage}%
-        </p>
+  <h2>
+    ₹{discountedPrice.toFixed(2)}
+  </h2>
+
+  <p className="original-price">
+    ₹{product.price}
+  </p>
+
+  <p className="discount-badge">
+    {product.discountPercentage}% OFF
+  </p>
+
+</div>
 
         <p>
           {product.description}

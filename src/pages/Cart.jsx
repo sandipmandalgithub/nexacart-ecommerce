@@ -85,9 +85,17 @@ const Cart = () => {
                   {item.title}
                 </h3>
 
-                <p>
-                  ₹{item.price}
-                </p>
+                <div className="cart-price">
+
+  <span className="cart-original-price">
+    ₹{item.originalPrice}
+  </span>
+
+  <span className="cart-discounted-price">
+    ₹{item.price}
+  </span>
+
+</div>
 
 <p
   className={
