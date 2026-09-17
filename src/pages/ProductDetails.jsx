@@ -25,6 +25,7 @@ const ProductDetails = () => {
   const [error, setError] = useState("")
   const [selectedImage, setSelectedImage] = useState("")
   const [quantity, setQuantity] = useState(1)
+  const [addedToCart, setAddedToCart] = useState(false)
 
   const wishlistItems = useSelector(
     (state) => state.cart.wishlistItems
@@ -211,12 +212,19 @@ const ProductDetails = () => {
     for (let i = 0; i < quantity; i++) {
       dispatch(addToCart(product))
     }
+setAddedToCart(true)
+
+setTimeout(() => {
+  setAddedToCart(false)
+}, 2000)
   }}
   disabled={product.stock === 0}
 >
   {product.stock === 0
-    ? "Out of Stock"
-    : "Add To Cart"}
+  ? "Out of Stock"
+  : addedToCart
+  ? "Added to Cart ✓"
+  : "Add To Cart"}
 </button>
 
 <button
