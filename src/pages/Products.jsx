@@ -120,6 +120,17 @@ const Products = () => {
         }}
       />
 
+      {searchTerm && (
+        <button
+          onClick={() => {
+            setSearchTerm("")
+            setCurrentPage(1)
+          }}
+        >
+          Clear Search
+        </button>
+      )}
+
       {/* Category Filter */}
       <select
         value={selectedCategory}
@@ -167,20 +178,31 @@ const Products = () => {
       {loading ? (
         <div className="loading-container">
           <div className="loading-spinner"></div>
-          <p>Loading products...</p>
+
+          <p>
+            Loading products...
+          </p>
         </div>
       ) : error ? (
         <div className="error-container">
-        <div className="error-icon">⚠️</div>
+          <div className="error-icon">
+            ⚠️
+          </div>
 
-    <h2>Something went wrong</h2>
+          <h2>
+            Something went wrong
+          </h2>
 
-    <p>{error}</p>
+          <p>
+            {error}
+          </p>
 
-    <button onClick={fetchProducts}>
-      Try Again
-    </button>
-  </div>
+          <button
+            onClick={fetchProducts}
+          >
+            Try Again
+          </button>
+        </div>
       ) : (
         <>
           {/* Products */}
@@ -193,7 +215,9 @@ const Products = () => {
                 />
               ))
             ) : (
-              <p>No products found.</p>
+              <p>
+                No products found.
+              </p>
             )}
           </div>
 
@@ -236,4 +260,3 @@ const Products = () => {
 }
 
 export default Products
-
