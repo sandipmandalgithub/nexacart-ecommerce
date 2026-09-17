@@ -33,6 +33,7 @@ const Checkout = () => {
 
   const [orderPlaced, setOrderPlaced] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [orderId, setOrderId] = useState("")
 
   if (orderPlaced) {
     return (
@@ -49,6 +50,14 @@ const Checkout = () => {
         <p>
           Thank you for your purchase.
           Your order has been placed successfully.
+        </p>
+
+        <p>
+          Order ID: <strong>{orderId}</strong>
+        </p>
+
+        <p>
+          Total Paid: ₹{grandTotal}
         </p>
 
         <Link to="/products">
@@ -80,6 +89,26 @@ const Checkout = () => {
     )
   }
 
+  const generateOrderId = () => {
+    const date = new Date()
+
+    const year = date.getFullYear()
+
+    const month = String(
+      date.getMonth() + 1
+    ).padStart(2, "0")
+
+    const day = String(
+      date.getDate()
+    ).padStart(2, "0")
+
+    const randomNumber = Math.floor(
+      1000 + Math.random() * 9000
+    )
+
+    return `NC-${year}${month}${day}-${randomNumber}`
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -98,7 +127,9 @@ const Checkout = () => {
       return
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    ) {
       alert("Please enter a valid email address")
       return
     }
@@ -115,9 +146,15 @@ const Checkout = () => {
 
     setIsProcessing(true)
 
+    const newOrderId = generateOrderId()
+
+    setOrderId(newOrderId)
+
     dispatch(clearCart())
 
     setOrderPlaced(true)
+
+    setIsProcessing(false)
   }
 
   return (
