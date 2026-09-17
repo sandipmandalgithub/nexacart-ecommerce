@@ -1,17 +1,31 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+
 import { useEffect, useState } from "react"
+import { useSearchParams } from "react-router-dom"
 import axios from "axios"
 
 import Product from "../components/Product"
 
 const Products = () => {
+  const [searchParams, setSearchParams] =
+    useSearchParams()
+
+  const categoryFromUrl =
+    searchParams.get("category")
+
   const [searchTerm, setSearchTerm] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [selectedRating, setSelectedRating] = useState("All")
+
+  const [selectedCategory, setSelectedCategory] =
+    useState(categoryFromUrl || "All")
+
+  const [selectedRating, setSelectedRating] =
+    useState("All")
 
   const [minPrice, setMinPrice] = useState("")
   const [maxPrice, setMaxPrice] = useState("")
 
-  const [sortOption, setSortOption] = useState("default")
+  const [sortOption, setSortOption] =
+    useState("default")
 
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
@@ -19,7 +33,8 @@ const Products = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] =
+    useState(1)
 
   const productsPerPage = 30
 
@@ -35,7 +50,10 @@ const Products = () => {
       })
       .catch((error) => {
         console.log(error)
-        setError("Failed to load products. Please try again.")
+
+        setError(
+          "Failed to load products. Please try again."
+        )
       })
       .finally(() => {
         setLoading(false)
@@ -44,24 +62,15 @@ const Products = () => {
 
   // Initial products load
   useEffect(() => {
-    axios
-      .get("https://dummyjson.com/products?limit=0")
-      .then((response) => {
-        setProducts(response.data.products)
-      })
-      .catch((error) => {
-        console.log(error)
-        setError("Failed to load products. Please try again.")
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    fetchProducts()
   }, [])
 
   // Fetch categories
   useEffect(() => {
     axios
-      .get("https://dummyjson.com/products/category-list")
+      .get(
+        "https://dummyjson.com/products/category-list"
+      )
       .then((response) => {
         setCategories(response.data)
       })
@@ -70,70 +79,87 @@ const Products = () => {
       })
   }, [])
 
-  // Search, category, rating and price filtering
-  const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
+  // Filter products
+  const filteredProducts = products.filter(
+    (product) => {
+      const activeCategory =
+        categoryFromUrl || selectedCategory
 
-    const matchesCategory =
-      selectedCategory === "All" ||
-      product.category === selectedCategory
+      const matchesSearch =
+        product.title
+          .toLowerCase()
+          .includes(
+            searchTerm.toLowerCase()
+          )
 
-    const matchesRating =
-      selectedRating === "All" ||
-      product.rating >= Number(selectedRating)
+      const matchesCategory =
+        activeCategory === "All" ||
+        product.category === activeCategory
 
-    const matchesMinPrice =
-      minPrice === "" ||
-      product.price >= Number(minPrice)
+      const matchesRating =
+        selectedRating === "All" ||
+        product.rating >=
+          Number(selectedRating)
 
-    const matchesMaxPrice =
-      maxPrice === "" ||
-      product.price <= Number(maxPrice)
+      const matchesMinPrice =
+        minPrice === "" ||
+        product.price >= Number(minPrice)
 
-    return (
-      matchesSearch &&
-      matchesCategory &&
-      matchesRating &&
-      matchesMinPrice &&
-      matchesMaxPrice
-    )
-  })
+      const matchesMaxPrice =
+        maxPrice === "" ||
+        product.price <= Number(maxPrice)
+
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesRating &&
+        matchesMinPrice &&
+        matchesMaxPrice
+      )
+    }
+  )
 
   // Sorting
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortOption === "price-low") {
-      return a.price - b.price
-    }
+  const sortedProducts =
+    [...filteredProducts].sort((a, b) => {
+      if (sortOption === "price-low") {
+        return a.price - b.price
+      }
 
-    if (sortOption === "price-high") {
-      return b.price - a.price
-    }
+      if (sortOption === "price-high") {
+        return b.price - a.price
+      }
 
-    return 0
-  })
+      return 0
+    })
 
   // Total pages
   const totalPages = Math.ceil(
-    sortedProducts.length / productsPerPage
+    sortedProducts.length /
+      productsPerPage
   )
 
   // Current page products
   const startIndex =
-    (currentPage - 1) * productsPerPage
+    (currentPage - 1) *
+    productsPerPage
 
-  const currentProducts = sortedProducts.slice(
-    startIndex,
-    startIndex + productsPerPage
-  )
+  const currentProducts =
+    sortedProducts.slice(
+      startIndex,
+      startIndex + productsPerPage
+    )
 
   // Smart pagination numbers
   const getPaginationPages = () => {
     const pages = []
 
     if (totalPages <= 7) {
-      for (let page = 1; page <= totalPages; page++) {
+      for (
+        let page = 1;
+        page <= totalPages;
+        page++
+      ) {
         pages.push(page)
       }
 
@@ -146,7 +172,10 @@ const Products = () => {
       pages.push("...")
     }
 
-    const startPage = Math.max(2, currentPage - 1)
+    const startPage = Math.max(
+      2,
+      currentPage - 1
+    )
 
     const endPage = Math.min(
       totalPages - 1,
@@ -161,13 +190,33 @@ const Products = () => {
       pages.push(page)
     }
 
-    if (currentPage < totalPages - 3) {
+    if (
+      currentPage <
+      totalPages - 3
+    ) {
       pages.push("...")
     }
 
     pages.push(totalPages)
 
     return pages
+  }
+
+  // Category change
+  const handleCategoryChange = (e) => {
+    const category = e.target.value
+
+    setSelectedCategory(category)
+    setCurrentPage(1)
+
+    if (category === "All") {
+      searchParams.delete("category")
+      setSearchParams(searchParams)
+    } else {
+      setSearchParams({
+        category
+      })
+    }
   }
 
   // Clear all filters
@@ -179,10 +228,14 @@ const Products = () => {
     setMaxPrice("")
     setSortOption("default")
     setCurrentPage(1)
+
+    searchParams.delete("category")
+    setSearchParams(searchParams)
   }
 
   const hasActiveFilters =
     searchTerm ||
+    categoryFromUrl ||
     selectedCategory !== "All" ||
     selectedRating !== "All" ||
     minPrice !== "" ||
@@ -191,7 +244,10 @@ const Products = () => {
 
   return (
     <div className="products-page">
-      <h1>Products</h1>
+
+      <h1>
+        Products
+      </h1>
 
       {/* Search */}
       <input
@@ -217,31 +273,35 @@ const Products = () => {
 
       {/* Category Filter */}
       <select
-        value={selectedCategory}
-        onChange={(e) => {
-          setSelectedCategory(e.target.value)
-          setCurrentPage(1)
-        }}
+        value={
+          categoryFromUrl ||
+          selectedCategory
+        }
+        onChange={handleCategoryChange}
       >
         <option value="All">
           All Categories
         </option>
 
-        {categories.map((category) => (
-          <option
-            key={category}
-            value={category}
-          >
-            {category}
-          </option>
-        ))}
+        {categories.map(
+          (category) => (
+            <option
+              key={category}
+              value={category}
+            >
+              {category}
+            </option>
+          )
+        )}
       </select>
 
       {/* Rating Filter */}
       <select
         value={selectedRating}
         onChange={(e) => {
-          setSelectedRating(e.target.value)
+          setSelectedRating(
+            e.target.value
+          )
           setCurrentPage(1)
         }}
       >
@@ -291,7 +351,9 @@ const Products = () => {
 
       {/* Clear All Filters */}
       {hasActiveFilters && (
-        <button onClick={clearFilters}>
+        <button
+          onClick={clearFilters}
+        >
           Clear Filters
         </button>
       )}
@@ -320,14 +382,17 @@ const Products = () => {
       {/* Loading */}
       {loading ? (
         <div className="loading-container">
+
           <div className="loading-spinner"></div>
 
           <p>
             Loading products...
           </p>
+
         </div>
       ) : error ? (
         <div className="error-container">
+
           <div className="error-icon">
             ⚠️
           </div>
@@ -345,35 +410,43 @@ const Products = () => {
           >
             Try Again
           </button>
+
         </div>
       ) : (
         <>
           {/* Products */}
           <div className="products">
+
             {currentProducts.length > 0 ? (
-              currentProducts.map((product) => (
-                <Product
-                  key={product.id}
-                  product={product}
-                />
-              ))
+              currentProducts.map(
+                (product) => (
+                  <Product
+                    key={product.id}
+                    product={product}
+                  />
+                )
+              )
             ) : (
               <p>
                 No products found.
               </p>
             )}
+
           </div>
 
           {/* Smart Pagination */}
           {totalPages > 1 && (
             <div className="pagination">
+
               <button
                 onClick={() =>
                   setCurrentPage(
                     (page) => page - 1
                   )
                 }
-                disabled={currentPage === 1}
+                disabled={
+                  currentPage === 1
+                }
               >
                 Previous
               </button>
@@ -411,15 +484,19 @@ const Products = () => {
                   )
                 }
                 disabled={
-                  currentPage === totalPages
+                  currentPage ===
+                  totalPages
                 }
               >
                 Next
               </button>
+
             </div>
           )}
+
         </>
       )}
+
     </div>
   )
 }

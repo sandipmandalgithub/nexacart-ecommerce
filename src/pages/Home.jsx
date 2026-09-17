@@ -6,9 +6,15 @@ import Product from "../components/Product"
 
 const Home = () => {
   const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
+
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
+  const [categoriesLoading, setCategoriesLoading] =
+    useState(true)
+
+  // Fetch featured products
   useEffect(() => {
     axios
       .get("https://dummyjson.com/products?limit=6")
@@ -17,12 +23,28 @@ const Home = () => {
       })
       .catch((error) => {
         console.log(error)
+
         setError(
           "Failed to load featured products. Please try again."
         )
       })
       .finally(() => {
         setLoading(false)
+      })
+  }, [])
+
+  // Fetch categories
+  useEffect(() => {
+    axios
+      .get("https://dummyjson.com/products/category-list")
+      .then((response) => {
+        setCategories(response.data.slice(0, 8))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+      .finally(() => {
+        setCategoriesLoading(false)
       })
   }, [])
 
@@ -70,12 +92,75 @@ const Home = () => {
 
       </section>
 
+      {/* Shop By Category */}
+      <section className="categories-section">
+
+        <div className="categories-header">
+
+          <p className="featured-label">
+            EXPLORE CATEGORIES
+          </p>
+
+          <h2>
+            Shop by Category
+          </h2>
+
+          <p>
+            Explore products by category and find
+            exactly what you are looking for.
+          </p>
+
+        </div>
+
+        {categoriesLoading ? (
+          <div className="loading-container">
+
+            <div className="loading-spinner"></div>
+
+            <p>
+              Loading categories...
+            </p>
+
+          </div>
+        ) : (
+          <div className="categories-grid">
+
+            {categories.map((category) => (
+              <Link
+                key={category}
+                to={`/products?category=${encodeURIComponent(
+                  category
+                )}`}
+                className="category-card"
+              >
+
+                <div className="category-icon">
+                  🛍️
+                </div>
+
+                <h3>
+                  {category}
+                </h3>
+
+                <span>
+                  Explore →
+                </span>
+
+              </Link>
+            ))}
+
+          </div>
+        )}
+
+      </section>
+
       {/* Featured Products */}
       <section className="featured-products-section">
 
         <div className="featured-products-header">
 
           <div>
+
             <p className="featured-label">
               OUR PICKS
             </p>
@@ -88,6 +173,7 @@ const Home = () => {
               Explore some of our popular products
               and discover your next favorite item.
             </p>
+
           </div>
 
           <Link
