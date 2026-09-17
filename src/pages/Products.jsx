@@ -6,6 +6,7 @@ import Product from "../components/Product"
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
+  const [selectedRating, setSelectedRating] = useState("All")
   const [sortOption, setSortOption] = useState("default")
 
   const [products, setProducts] = useState([])
@@ -65,7 +66,7 @@ const Products = () => {
       })
   }, [])
 
-  // Search and category filtering
+  // Search, category and rating filtering
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.title
       .toLowerCase()
@@ -75,7 +76,15 @@ const Products = () => {
       selectedCategory === "All" ||
       product.category === selectedCategory
 
-    return matchesSearch && matchesCategory
+    const matchesRating =
+      selectedRating === "All" ||
+      product.rating >= Number(selectedRating)
+
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesRating
+    )
   })
 
   // Sorting
@@ -193,6 +202,35 @@ const Products = () => {
             {category}
           </option>
         ))}
+      </select>
+
+      {/* Rating Filter */}
+      <select
+        value={selectedRating}
+        onChange={(e) => {
+          setSelectedRating(e.target.value)
+          setCurrentPage(1)
+        }}
+      >
+        <option value="All">
+          All Ratings
+        </option>
+
+        <option value="4">
+          ⭐ 4 & Above
+        </option>
+
+        <option value="3">
+          ⭐ 3 & Above
+        </option>
+
+        <option value="2">
+          ⭐ 2 & Above
+        </option>
+
+        <option value="1">
+          ⭐ 1 & Above
+        </option>
       </select>
 
       {/* Sorting */}
