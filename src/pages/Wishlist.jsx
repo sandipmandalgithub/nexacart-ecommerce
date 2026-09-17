@@ -88,15 +88,19 @@ const Wishlist = () => {
                   </span>
                 </div>
 
-                <button
-                  onClick={() =>
-                    dispatch(
-                      removeFromWishlist(item.id)
-                    )
-                  }
-                >
-                  Remove
-                </button>
+<button
+  onClick={() => {
+    const confirmed = window.confirm(
+      "Are you sure you want to remove this item from your wishlist?"
+    )
+
+    if (confirmed) {
+      dispatch(removeFromWishlist(item.id))
+    }
+  }}
+>
+  Remove
+</button>
 
                 <button
                   onClick={() => {
