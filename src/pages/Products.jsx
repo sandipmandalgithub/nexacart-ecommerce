@@ -105,6 +105,48 @@ const Products = () => {
     startIndex + productsPerPage
   )
 
+  // Smart pagination numbers
+  const getPaginationPages = () => {
+    const pages = []
+
+    if (totalPages <= 7) {
+      for (let page = 1; page <= totalPages; page++) {
+        pages.push(page)
+      }
+
+      return pages
+    }
+
+    pages.push(1)
+
+    if (currentPage > 4) {
+      pages.push("...")
+    }
+
+    const startPage = Math.max(2, currentPage - 1)
+
+    const endPage = Math.min(
+      totalPages - 1,
+      currentPage + 1
+    )
+
+    for (
+      let page = startPage;
+      page <= endPage;
+      page++
+    ) {
+      pages.push(page)
+    }
+
+    if (currentPage < totalPages - 3) {
+      pages.push("...")
+    }
+
+    pages.push(totalPages)
+
+    return pages
+  }
+
   return (
     <div className="products-page">
       <h1>Products</h1>
@@ -221,44 +263,59 @@ const Products = () => {
             )}
           </div>
 
-          {/* Pagination */}
+          {/* Smart Pagination */}
           {totalPages > 1 && (
             <div className="pagination">
-  <button
-    onClick={() =>
-      setCurrentPage((page) => page - 1)
-    }
-    disabled={currentPage === 1}
-  >
-    Previous
-  </button>
+              <button
+                onClick={() =>
+                  setCurrentPage(
+                    (page) => page - 1
+                  )
+                }
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
 
-  {Array.from(
-    { length: totalPages },
-    (_, index) => index + 1
-  ).map((page) => (
-    <button
-      key={page}
-      onClick={() => setCurrentPage(page)}
-      className={
-        currentPage === page
-          ? "active-page"
-          : ""
-      }
-    >
-      {page}
-    </button>
-  ))}
+              {getPaginationPages().map(
+                (page, index) =>
+                  page === "..." ? (
+                    <span
+                      key={`ellipsis-${index}`}
+                      className="pagination-ellipsis"
+                    >
+                      ...
+                    </span>
+                  ) : (
+                    <button
+                      key={page}
+                      onClick={() =>
+                        setCurrentPage(page)
+                      }
+                      className={
+                        currentPage === page
+                          ? "active-page"
+                          : ""
+                      }
+                    >
+                      {page}
+                    </button>
+                  )
+              )}
 
-  <button
-    onClick={() =>
-      setCurrentPage((page) => page + 1)
-    }
-    disabled={currentPage === totalPages}
-  >
-    Next
-  </button>
-</div>
+              <button
+                onClick={() =>
+                  setCurrentPage(
+                    (page) => page + 1
+                  )
+                }
+                disabled={
+                  currentPage === totalPages
+                }
+              >
+                Next
+              </button>
+            </div>
           )}
         </>
       )}
