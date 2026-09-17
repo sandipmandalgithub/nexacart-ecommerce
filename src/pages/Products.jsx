@@ -7,6 +7,10 @@ const Products = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedRating, setSelectedRating] = useState("All")
+
+  const [minPrice, setMinPrice] = useState("")
+  const [maxPrice, setMaxPrice] = useState("")
+
   const [sortOption, setSortOption] = useState("default")
 
   const [products, setProducts] = useState([])
@@ -66,7 +70,7 @@ const Products = () => {
       })
   }, [])
 
-  // Search, category and rating filtering
+  // Search, category, rating and price filtering
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.title
       .toLowerCase()
@@ -80,10 +84,20 @@ const Products = () => {
       selectedRating === "All" ||
       product.rating >= Number(selectedRating)
 
+    const matchesMinPrice =
+      minPrice === "" ||
+      product.price >= Number(minPrice)
+
+    const matchesMaxPrice =
+      maxPrice === "" ||
+      product.price <= Number(maxPrice)
+
     return (
       matchesSearch &&
       matchesCategory &&
-      matchesRating
+      matchesRating &&
+      matchesMinPrice &&
+      matchesMaxPrice
     )
   })
 
@@ -155,6 +169,25 @@ const Products = () => {
 
     return pages
   }
+
+  // Clear all filters
+  const clearFilters = () => {
+    setSearchTerm("")
+    setSelectedCategory("All")
+    setSelectedRating("All")
+    setMinPrice("")
+    setMaxPrice("")
+    setSortOption("default")
+    setCurrentPage(1)
+  }
+
+  const hasActiveFilters =
+    searchTerm ||
+    selectedCategory !== "All" ||
+    selectedRating !== "All" ||
+    minPrice !== "" ||
+    maxPrice !== "" ||
+    sortOption !== "default"
 
   return (
     <div className="products-page">
@@ -232,6 +265,36 @@ const Products = () => {
           ⭐ 1 & Above
         </option>
       </select>
+
+      {/* Price Range Filter */}
+      <input
+        type="number"
+        placeholder="Min Price"
+        value={minPrice}
+        min="0"
+        onChange={(e) => {
+          setMinPrice(e.target.value)
+          setCurrentPage(1)
+        }}
+      />
+
+      <input
+        type="number"
+        placeholder="Max Price"
+        value={maxPrice}
+        min="0"
+        onChange={(e) => {
+          setMaxPrice(e.target.value)
+          setCurrentPage(1)
+        }}
+      />
+
+      {/* Clear All Filters */}
+      {hasActiveFilters && (
+        <button onClick={clearFilters}>
+          Clear Filters
+        </button>
+      )}
 
       {/* Sorting */}
       <select
