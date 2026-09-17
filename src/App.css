@@ -1923,3 +1923,350 @@ body {
     margin-right: 5px;
   }
 }
+
+/* ================================
+   CHECKOUT PAGE
+================================ */
+
+.checkout-container {
+  max-width: 1100px;
+  margin: 50px auto;
+  padding: 0 30px;
+}
+
+.checkout-container > h1 {
+  margin-bottom: 8px;
+  font-size: 34px;
+}
+
+.checkout-container > p {
+  margin-bottom: 30px;
+  color: #666;
+  font-size: 16px;
+}
+
+
+/* ================================
+   CHECKOUT SUMMARY
+================================ */
+
+.checkout-summary {
+  max-width: 100%;
+  margin-bottom: 35px;
+  padding: 25px;
+  border: 1px solid #e5e5e5;
+  border-radius: 14px;
+  background: #fafafa;
+}
+
+.checkout-summary h2 {
+  margin: 0 0 20px;
+  font-size: 22px;
+}
+
+.checkout-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e5e5;
+  color: #444;
+}
+
+.checkout-item span:last-child {
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.checkout-summary .summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px 0;
+  color: #555;
+}
+
+.checkout-summary .summary-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 10px;
+  padding-top: 18px;
+  border-top: 1px solid #ddd;
+  font-size: 21px;
+  font-weight: 700;
+  color: #222;
+}
+
+
+/* ================================
+   CHECKOUT FORM
+================================ */
+
+.checkout-container form {
+  max-width: 100%;
+  padding: 30px;
+  border: 1px solid #e5e5e5;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+}
+
+.checkout-container form > div {
+  margin-bottom: 22px;
+}
+
+.checkout-container form > div > label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.checkout-container form input[type="text"],
+.checkout-container form input[type="email"],
+.checkout-container form input[type="tel"],
+.checkout-container form textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d5d5d5;
+  border-radius: 8px;
+  background: white;
+  color: #222;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.checkout-container form input[type="text"]:focus,
+.checkout-container form input[type="email"]:focus,
+.checkout-container form input[type="tel"]:focus,
+.checkout-container form textarea:focus {
+  border-color: #222;
+  box-shadow: 0 0 0 3px rgba(34, 34, 34, 0.08);
+}
+
+.checkout-container form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.checkout-container form input::placeholder,
+.checkout-container form textarea::placeholder {
+  color: #999;
+}
+
+
+/* ================================
+   PAYMENT METHODS
+================================ */
+
+.payment-methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.payment-methods label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 55px;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 9px;
+  background: white;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.payment-methods label:hover {
+  border-color: #aaa;
+  background: #f8f8f8;
+  transform: translateY(-1px);
+}
+
+.payment-methods input[type="radio"] {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: #222;
+  cursor: pointer;
+}
+
+
+/* ================================
+   PLACE ORDER BUTTON
+================================ */
+
+.checkout-container form > button {
+  width: 100%;
+  margin-top: 5px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 9px;
+  background: #222;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.checkout-container form > button:hover:not(:disabled) {
+  background: #000;
+  transform: translateY(-2px);
+}
+
+.checkout-container form > button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* ================================
+   EMPTY CART CHECKOUT
+================================ */
+
+.checkout-container:has(> h1:first-child) {
+  text-align: left;
+}
+
+.checkout-container > h1 {
+  color: #222;
+}
+
+
+/* ================================
+   ORDER SUCCESS
+================================ */
+
+.success-container {
+  max-width: 650px;
+  margin: 80px auto;
+  padding: 45px 35px;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  background: white;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+.success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: 75px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #f1f8f3;
+  font-size: 38px;
+}
+
+.success-container h1 {
+  margin-bottom: 15px;
+  font-size: 30px;
+}
+
+.success-container p {
+  margin: 10px 0;
+  color: #666;
+  line-height: 1.6;
+}
+
+.success-container strong {
+  color: #222;
+}
+
+.success-container p:last-of-type {
+  margin-top: 18px;
+  color: #222;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.success-container a {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 12px 22px;
+  border-radius: 8px;
+  background: #222;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.success-container a:hover {
+  background: #000;
+  transform: translateY(-2px);
+}
+
+
+/* ================================
+   MOBILE RESPONSIVE
+================================ */
+
+@media (max-width: 700px) {
+
+  .checkout-container {
+    margin: 30px auto;
+    padding: 0 15px;
+  }
+
+  .checkout-container > h1 {
+    font-size: 28px;
+  }
+
+  .checkout-summary {
+    padding: 18px;
+  }
+
+  .checkout-summary h2 {
+    font-size: 20px;
+  }
+
+  .checkout-item {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .checkout-summary .summary-total {
+    font-size: 18px;
+  }
+
+  .checkout-container form {
+    padding: 20px;
+  }
+
+  .payment-methods {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .payment-methods label {
+    min-height: auto;
+  }
+
+  .success-container {
+    margin: 50px 15px;
+    padding: 35px 20px;
+  }
+
+  .success-container h1 {
+    font-size: 25px;
+  }
+
+  .success-container p:last-of-type {
+    font-size: 18px;
+  }
+}

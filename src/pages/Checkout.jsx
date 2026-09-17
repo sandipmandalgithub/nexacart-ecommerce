@@ -31,14 +31,25 @@ const Checkout = () => {
   const [address, setAddress] = useState("")
   const [phone, setPhone] = useState("")
 
-  const [paymentMethod, setPaymentMethod] = useState("")
+  const [paymentMethod, setPaymentMethod] =
+    useState("")
 
-  const [orderPlaced, setOrderPlaced] = useState(false)
-  const [isProcessing, setIsProcessing] = useState(false)
+  const [orderPlaced, setOrderPlaced] =
+    useState(false)
 
-  const [orderId, setOrderId] = useState("")
-  const [orderTotal, setOrderTotal] = useState(0)
-  const [placedPaymentMethod, setPlacedPaymentMethod] = useState("")
+  const [isProcessing, setIsProcessing] =
+    useState(false)
+
+  const [orderId, setOrderId] =
+    useState("")
+
+  const [orderTotal, setOrderTotal] =
+    useState(0)
+
+  const [
+    placedPaymentMethod,
+    setPlacedPaymentMethod
+  ] = useState("")
 
   // Generate Order ID
   const generateOrderId = () => {
@@ -86,9 +97,13 @@ const Checkout = () => {
     }
 
     if (
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+        email
+      )
     ) {
-      alert("Please enter a valid email address")
+      alert(
+        "Please enter a valid email address"
+      )
       return
     }
 
@@ -108,13 +123,16 @@ const Checkout = () => {
 
     setIsProcessing(true)
 
-    const newOrderId = generateOrderId()
+    const newOrderId =
+      generateOrderId()
 
     setOrderId(newOrderId)
 
     setOrderTotal(grandTotal)
 
-    setPlacedPaymentMethod(paymentMethod)
+    setPlacedPaymentMethod(
+      paymentMethod
+    )
 
     dispatch(clearCart())
 
@@ -138,7 +156,8 @@ const Checkout = () => {
 
         <p>
           Thank you for your purchase.
-          Your order has been placed successfully.
+          Your order has been placed
+          successfully.
         </p>
 
         <p>
@@ -201,6 +220,7 @@ const Checkout = () => {
       </p>
 
       {/* Order Summary */}
+
       <div className="checkout-summary">
 
         <h2>
@@ -263,9 +283,11 @@ const Checkout = () => {
       </div>
 
       {/* Checkout Form */}
+
       <form onSubmit={handleSubmit}>
 
         {/* Full Name */}
+
         <div>
 
           <label>
@@ -285,6 +307,7 @@ const Checkout = () => {
         </div>
 
         {/* Email */}
+
         <div>
 
           <label>
@@ -304,6 +327,7 @@ const Checkout = () => {
         </div>
 
         {/* Phone */}
+
         <div>
 
           <label>
@@ -331,6 +355,7 @@ const Checkout = () => {
         </div>
 
         {/* Address */}
+
         <div>
 
           <label>
@@ -349,6 +374,7 @@ const Checkout = () => {
         </div>
 
         {/* Payment Method */}
+
         <div>
 
           <label>
@@ -358,6 +384,7 @@ const Checkout = () => {
           <div className="payment-methods">
 
             <label>
+
               <input
                 type="radio"
                 name="paymentMethod"
@@ -374,9 +401,11 @@ const Checkout = () => {
               />
 
               💵 Cash on Delivery
+
             </label>
 
             <label>
+
               <input
                 type="radio"
                 name="paymentMethod"
@@ -392,9 +421,11 @@ const Checkout = () => {
               />
 
               📱 UPI
+
             </label>
 
             <label>
+
               <input
                 type="radio"
                 name="paymentMethod"
@@ -410,6 +441,7 @@ const Checkout = () => {
               />
 
               💳 Card
+
             </label>
 
           </div>
@@ -417,6 +449,7 @@ const Checkout = () => {
         </div>
 
         {/* Place Order */}
+
         <button
           type="submit"
           disabled={isProcessing}
