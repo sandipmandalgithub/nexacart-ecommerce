@@ -151,15 +151,19 @@ const Cart = () => {
 
                 </div>
 
-                <button
-                  onClick={() =>
-                    dispatch(
-                      removeFromCart(item.id)
-                    )
-                  }
-                >
-                  Remove
-                </button>
+<button
+  onClick={() => {
+    const confirmed = window.confirm(
+      "Are you sure you want to remove this item from your cart?"
+    )
+
+    if (confirmed) {
+      dispatch(removeFromCart(item.id))
+    }
+  }}
+>
+  Remove
+</button>
 
                 <button
                   onClick={() => {
