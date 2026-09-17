@@ -816,3 +816,7 @@ body {
 .product-thumbnails .thumbnail.active {
   border-color: #333;
 }
+
+.order-summary .summary-row:nth-child(5) {
+  font-weight: 600;
+}

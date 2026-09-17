@@ -23,6 +23,13 @@ const Cart = () => {
     0
   )
 
+  const totalSavings = cartItems.reduce(
+  (total, item) =>
+    total +
+    (item.originalPrice - item.price) * item.quantity,
+  0
+)
+
   const totalItems = cartItems.reduce(
     (total, item) =>
       total + item.quantity,
@@ -85,7 +92,7 @@ const Cart = () => {
                   {item.title}
                 </h3>
 
-                <div className="cart-price">
+<div className="cart-price">
 
   <span className="cart-original-price">
     ₹{item.originalPrice}
@@ -208,6 +215,16 @@ const Cart = () => {
                 ₹{shipping}
               </span>
             </div>
+
+<div className="summary-row">
+  <span>
+    You Saved
+  </span>
+
+  <span>
+    ₹{totalSavings.toFixed(2)}
+  </span>
+</div>
 
             <div className="summary-total">
               <span>
