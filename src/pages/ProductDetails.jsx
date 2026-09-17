@@ -106,12 +106,17 @@ const ProductDetails = () => {
 
         <div className="product-thumbnails">
           {product.images?.map((image) => (
-            <img
-              key={image}
-              src={image}
-              alt={product.title}
-              onClick={() => setSelectedImage(image)}
-            />
+<img
+  key={image}
+  src={image}
+  alt={product.title}
+  className={
+    selectedImage === image
+      ? "thumbnail active"
+      : "thumbnail"
+  }
+  onClick={() => setSelectedImage(image)}
+/>
           ))}
         </div>
       </div>

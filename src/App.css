@@ -798,3 +798,21 @@ body {
   font-size: 12px;
   font-weight: 600;
 }
+
+.product-thumbnails .thumbnail {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.product-thumbnails .thumbnail:hover {
+  border-color: #999;
+}
+
+.product-thumbnails .thumbnail.active {
+  border-color: #333;
+}
