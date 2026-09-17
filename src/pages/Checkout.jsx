@@ -31,10 +31,99 @@ const Checkout = () => {
   const [address, setAddress] = useState("")
   const [phone, setPhone] = useState("")
 
+  const [paymentMethod, setPaymentMethod] = useState("")
+
   const [orderPlaced, setOrderPlaced] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
-  const [orderId, setOrderId] = useState("")
 
+  const [orderId, setOrderId] = useState("")
+  const [orderTotal, setOrderTotal] = useState(0)
+  const [placedPaymentMethod, setPlacedPaymentMethod] = useState("")
+
+  // Generate Order ID
+  const generateOrderId = () => {
+    const date = new Date()
+
+    const year = date.getFullYear()
+
+    const month = String(
+      date.getMonth() + 1
+    ).padStart(2, "0")
+
+    const day = String(
+      date.getDate()
+    ).padStart(2, "0")
+
+    const randomNumber = Math.floor(
+      1000 + Math.random() * 9000
+    )
+
+    return `NC-${year}${month}${day}-${randomNumber}`
+  }
+
+  // Place Order
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    if (
+      !name ||
+      !email ||
+      !phone ||
+      !address
+    ) {
+      alert("Please fill in all fields")
+      return
+    }
+
+    if (!paymentMethod) {
+      alert("Please select a payment method")
+      return
+    }
+
+    if (name.trim().length < 3) {
+      alert("Please enter a valid name")
+      return
+    }
+
+    if (
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    ) {
+      alert("Please enter a valid email address")
+      return
+    }
+
+    if (address.trim().length < 10) {
+      alert(
+        "Please enter a complete delivery address"
+      )
+      return
+    }
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+      alert(
+        "Please enter a valid 10-digit phone number"
+      )
+      return
+    }
+
+    setIsProcessing(true)
+
+    const newOrderId = generateOrderId()
+
+    setOrderId(newOrderId)
+
+    setOrderTotal(grandTotal)
+
+    setPlacedPaymentMethod(paymentMethod)
+
+    dispatch(clearCart())
+
+    setOrderPlaced(true)
+
+    setIsProcessing(false)
+  }
+
+  // Order Success Page
   if (orderPlaced) {
     return (
       <div className="success-container">
@@ -53,11 +142,21 @@ const Checkout = () => {
         </p>
 
         <p>
-          Order ID: <strong>{orderId}</strong>
+          Order ID:{" "}
+          <strong>
+            {orderId}
+          </strong>
         </p>
 
         <p>
-          Total Paid: ₹{grandTotal}
+          Payment Method:{" "}
+          <strong>
+            {placedPaymentMethod}
+          </strong>
+        </p>
+
+        <p>
+          Total Paid: ₹{orderTotal}
         </p>
 
         <Link to="/products">
@@ -68,6 +167,7 @@ const Checkout = () => {
     )
   }
 
+  // Empty Cart
   if (cartItems.length === 0) {
     return (
       <div className="checkout-container">
@@ -89,74 +189,6 @@ const Checkout = () => {
     )
   }
 
-  const generateOrderId = () => {
-    const date = new Date()
-
-    const year = date.getFullYear()
-
-    const month = String(
-      date.getMonth() + 1
-    ).padStart(2, "0")
-
-    const day = String(
-      date.getDate()
-    ).padStart(2, "0")
-
-    const randomNumber = Math.floor(
-      1000 + Math.random() * 9000
-    )
-
-    return `NC-${year}${month}${day}-${randomNumber}`
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    if (
-      !name ||
-      !email ||
-      !phone ||
-      !address
-    ) {
-      alert("Please fill in all fields")
-      return
-    }
-
-    if (name.trim().length < 3) {
-      alert("Please enter a valid name")
-      return
-    }
-
-    if (
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-    ) {
-      alert("Please enter a valid email address")
-      return
-    }
-
-    if (address.trim().length < 10) {
-      alert("Please enter a complete delivery address")
-      return
-    }
-
-    if (!/^[0-9]{10}$/.test(phone)) {
-      alert("Please enter a valid 10-digit phone number")
-      return
-    }
-
-    setIsProcessing(true)
-
-    const newOrderId = generateOrderId()
-
-    setOrderId(newOrderId)
-
-    dispatch(clearCart())
-
-    setOrderPlaced(true)
-
-    setIsProcessing(false)
-  }
-
   return (
     <div className="checkout-container">
 
@@ -168,6 +200,7 @@ const Checkout = () => {
         Complete your order
       </p>
 
+      {/* Order Summary */}
       <div className="checkout-summary">
 
         <h2>
@@ -229,8 +262,10 @@ const Checkout = () => {
 
       </div>
 
+      {/* Checkout Form */}
       <form onSubmit={handleSubmit}>
 
+        {/* Full Name */}
         <div>
 
           <label>
@@ -249,6 +284,7 @@ const Checkout = () => {
 
         </div>
 
+        {/* Email */}
         <div>
 
           <label>
@@ -267,6 +303,7 @@ const Checkout = () => {
 
         </div>
 
+        {/* Phone */}
         <div>
 
           <label>
@@ -293,6 +330,7 @@ const Checkout = () => {
 
         </div>
 
+        {/* Address */}
         <div>
 
           <label>
@@ -310,6 +348,75 @@ const Checkout = () => {
 
         </div>
 
+        {/* Payment Method */}
+        <div>
+
+          <label>
+            Payment Method
+          </label>
+
+          <div className="payment-methods">
+
+            <label>
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="Cash on Delivery"
+                checked={
+                  paymentMethod ===
+                  "Cash on Delivery"
+                }
+                onChange={(e) =>
+                  setPaymentMethod(
+                    e.target.value
+                  )
+                }
+              />
+
+              💵 Cash on Delivery
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="UPI"
+                checked={
+                  paymentMethod === "UPI"
+                }
+                onChange={(e) =>
+                  setPaymentMethod(
+                    e.target.value
+                  )
+                }
+              />
+
+              📱 UPI
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="Card"
+                checked={
+                  paymentMethod === "Card"
+                }
+                onChange={(e) =>
+                  setPaymentMethod(
+                    e.target.value
+                  )
+                }
+              />
+
+              💳 Card
+            </label>
+
+          </div>
+
+        </div>
+
+        {/* Place Order */}
         <button
           type="submit"
           disabled={isProcessing}
