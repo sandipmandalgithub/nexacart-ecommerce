@@ -25,13 +25,15 @@ const cartSlice = createSlice({
       if (existingItem) {
         existingItem.quantity += 1
       } else {
-        const originalPrice = action.payload.price
-
-        const discountedPrice =
-          originalPrice -
-          (originalPrice *
-            action.payload.discountPercentage) /
-            100
+      const originalPrice = action.payload.originalPrice || action.payload.price
+      
+const discountedPrice =
+  action.payload.originalPrice
+    ? action.payload.price
+    : originalPrice -
+      (originalPrice *
+        action.payload.discountPercentage) /
+        100
 
         state.cartItems.push({
           ...action.payload,
