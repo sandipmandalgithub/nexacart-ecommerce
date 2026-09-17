@@ -224,34 +224,41 @@ const Products = () => {
           {/* Pagination */}
           {totalPages > 1 && (
             <div className="pagination">
-              <button
-                onClick={() =>
-                  setCurrentPage(
-                    (page) => page - 1
-                  )
-                }
-                disabled={currentPage === 1}
-              >
-                Previous
-              </button>
+  <button
+    onClick={() =>
+      setCurrentPage((page) => page - 1)
+    }
+    disabled={currentPage === 1}
+  >
+    Previous
+  </button>
 
-              <span>
-                Page {currentPage} of {totalPages}
-              </span>
+  {Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  ).map((page) => (
+    <button
+      key={page}
+      onClick={() => setCurrentPage(page)}
+      className={
+        currentPage === page
+          ? "active-page"
+          : ""
+      }
+    >
+      {page}
+    </button>
+  ))}
 
-              <button
-                onClick={() =>
-                  setCurrentPage(
-                    (page) => page + 1
-                  )
-                }
-                disabled={
-                  currentPage === totalPages
-                }
-              >
-                Next
-              </button>
-            </div>
+  <button
+    onClick={() =>
+      setCurrentPage((page) => page + 1)
+    }
+    disabled={currentPage === totalPages}
+  >
+    Next
+  </button>
+</div>
           )}
         </>
       )}
