@@ -31,6 +31,17 @@ const ProductDetails = () => {
     (state) => state.cart.wishlistItems
   )
 
+  const cartItems = useSelector(
+  (state) => state.cart.cartItems
+)
+
+const existingCartItem = cartItems.find(
+  (item) => item.id === product?.id
+)
+
+const existingQuantity =
+  existingCartItem?.quantity || 0
+
   const isWishlisted = wishlistItems.some(
     (item) => item.id === product?.id
   )
@@ -229,12 +240,24 @@ setTimeout(() => {
 
 <button
   onClick={() => {
-    for (let i = 0; i < quantity; i++) {
-      dispatch(addToCart(product))
-    }
+  const availableQuantity =
+    product.stock - existingQuantity
 
-    navigate("/checkout")
-  }}
+  const quantityToAdd = Math.min(
+    quantity,
+    availableQuantity
+  )
+  if (quantityToAdd === 0) {
+  alert("Maximum available quantity is already in your cart")
+  return
+}
+
+  for (let i = 0; i < quantityToAdd; i++) {
+    dispatch(addToCart(product))
+  }
+
+  navigate("/checkout")
+}}
   disabled={product.stock === 0}
 >
   {product.stock === 0
