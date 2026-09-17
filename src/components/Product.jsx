@@ -3,6 +3,7 @@ import {
   useDispatch,
   useSelector
 } from "react-redux"
+import toast from "react-hot-toast"
 
 import {
   addToCart,
@@ -25,6 +26,18 @@ const Product = ({ product }) => {
     (product.price * product.discountPercentage) / 100
 
   const isOutOfStock = product.stock === 0
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product))
+
+    toast.success("Product added to cart")
+  }
+
+  const handleAddToWishlist = () => {
+    dispatch(addToWishlist(product))
+
+    toast.success("Added to wishlist")
+  }
 
   return (
     <div className="product-card">
@@ -78,9 +91,7 @@ const Product = ({ product }) => {
 
       {/* Add To Cart */}
       <button
-        onClick={() =>
-          dispatch(addToCart(product))
-        }
+        onClick={handleAddToCart}
         disabled={isOutOfStock}
       >
         {isOutOfStock
@@ -90,9 +101,7 @@ const Product = ({ product }) => {
 
       {/* Wishlist */}
       <button
-        onClick={() =>
-          dispatch(addToWishlist(product))
-        }
+        onClick={handleAddToWishlist}
         disabled={isWishlisted}
       >
         {isWishlisted
