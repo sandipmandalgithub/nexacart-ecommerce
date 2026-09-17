@@ -15,6 +15,10 @@ const isWishlisted = wishlistItems.some(
   (item) => item.id === product.id
 )
 
+const discountedPrice =
+  product.price -
+  (product.price * product.discountPercentage) / 100
+
 
   return (
     <div className="product-card">
@@ -27,9 +31,19 @@ const isWishlisted = wishlistItems.some(
         {product.title}
       </h3>
 
-      <p>
-        ₹{product.price}
-      </p>
+      <div className="product-price">
+  <span className="product-original-price">
+    ₹{product.price}
+  </span>
+
+  <span className="product-discounted-price">
+    ₹{discountedPrice.toFixed(2)}
+  </span>
+
+  <span className="product-discount-badge">
+    {product.discountPercentage}% OFF
+  </span>
+</div>
 
       <button
         onClick={() => dispatch(addToCart(product))}

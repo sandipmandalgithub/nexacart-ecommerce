@@ -770,3 +770,31 @@ body {
   font-size: 18px;
   font-weight: 600;
 }
+
+.product-price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.product-original-price {
+  color: #777;
+  text-decoration: line-through;
+  font-size: 14px;
+}
+
+.product-discounted-price {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.product-discount-badge {
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 12px;
+  font-weight: 600;
+}
