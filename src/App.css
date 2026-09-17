@@ -2475,3 +2475,296 @@ body {
     padding: 0 9px;
   }
 }
+
+/* ================================
+   HEADER / NAVBAR POLISH
+================================ */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 35px;
+
+  border-bottom: 1px solid #e8e8e8;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+
+/* ================================
+   LOGO
+================================ */
+
+.header .logo {
+  flex-shrink: 0;
+
+  color: #222;
+  text-decoration: none;
+}
+
+.header .logo h2 {
+  margin: 0;
+
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+
+/* ================================
+   NAVIGATION
+================================ */
+
+.header .nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-left: auto;
+}
+
+.header .nav a {
+  position: relative;
+
+  padding: 8px 12px;
+
+  border-radius: 7px;
+
+  color: #444;
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+}
+
+.header .nav a:hover {
+  background: #f4f4f4;
+  color: #111;
+}
+
+
+/* ================================
+   CART
+================================ */
+
+.header .cart {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  flex-shrink: 0;
+
+  padding: 9px 14px;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  background: white;
+  color: #222;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+}
+
+.header .cart:hover {
+  background: #f5f5f5;
+  border-color: #bbb;
+  transform: translateY(-1px);
+}
+
+.cart-icon {
+  font-size: 17px;
+}
+
+.cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 20px;
+  height: 20px;
+
+  padding: 0 5px;
+
+  border-radius: 20px;
+
+  background: #222;
+  color: white;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* ================================
+   MOBILE MENU BUTTON
+================================ */
+
+.menu-button {
+  display: none;
+
+  padding: 7px 10px;
+
+  border: 1px solid #ddd;
+  border-radius: 7px;
+
+  background: white;
+  color: #222;
+
+  font-size: 20px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.menu-button:hover {
+  background: #f5f5f5;
+}
+
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 850px) {
+
+  .header {
+    gap: 15px;
+    padding: 14px 20px;
+  }
+
+  .header .nav {
+    gap: 2px;
+  }
+
+  .header .nav a {
+    padding: 8px 9px;
+    font-size: 13px;
+  }
+
+  .header .cart {
+    padding: 8px 11px;
+  }
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 700px) {
+
+  .header {
+    position: sticky;
+
+    flex-wrap: wrap;
+
+    gap: 0;
+
+    padding: 13px 15px;
+  }
+
+  .header .logo {
+    margin-right: auto;
+  }
+
+  .header .logo h2 {
+    font-size: 21px;
+  }
+
+  .menu-button {
+    display: block;
+    margin-right: 8px;
+  }
+
+  .header .cart {
+    padding: 8px 10px;
+  }
+
+  .header .cart > span:nth-child(2) {
+    display: none;
+  }
+
+  .header .nav {
+    display: none;
+
+    order: 10;
+
+    width: 100%;
+    margin-top: 12px;
+    padding-top: 10px;
+
+    border-top: 1px solid #eee;
+
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+
+  .header .nav.nav-open {
+    display: flex;
+  }
+
+  .header .nav a {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+  }
+
+  .header .nav a:hover {
+    background: #f5f5f5;
+  }
+}
+
+
+/* ================================
+   SMALL MOBILE
+================================ */
+
+@media (max-width: 400px) {
+
+  .header {
+    padding: 12px;
+  }
+
+  .header .logo h2 {
+    font-size: 19px;
+  }
+
+  .menu-button {
+    margin-right: 5px;
+  }
+
+  .header .cart {
+    padding: 7px 8px;
+  }
+
+  .cart-icon {
+    font-size: 16px;
+  }
+}
