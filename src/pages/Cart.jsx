@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import toast from "react-hot-toast"
 
 import {
   increaseQuantity,
@@ -24,11 +25,12 @@ const Cart = () => {
   )
 
   const totalSavings = cartItems.reduce(
-  (total, item) =>
-    total +
-    (item.originalPrice - item.price) * item.quantity,
-  0
-)
+    (total, item) =>
+      total +
+      (item.originalPrice - item.price) *
+        item.quantity,
+    0
+  )
 
   const totalItems = cartItems.reduce(
     (total, item) =>
@@ -92,29 +94,29 @@ const Cart = () => {
                   {item.title}
                 </h3>
 
-<div className="cart-price">
+                <div className="cart-price">
 
-  <span className="cart-original-price">
-    ₹{item.originalPrice}
-  </span>
+                  <span className="cart-original-price">
+                    ₹{item.originalPrice}
+                  </span>
 
-  <span className="cart-discounted-price">
-    ₹{item.price}
-  </span>
+                  <span className="cart-discounted-price">
+                    ₹{item.price}
+                  </span>
 
-</div>
+                </div>
 
-<p
-  className={
-    item.quantity >= item.stock
-      ? "stock-low"
-      : "stock-available"
-  }
->
-  {item.quantity >= item.stock
-    ? "Maximum available quantity added"
-    : `${item.stock - item.quantity} left in stock`}
-</p>
+                <p
+                  className={
+                    item.quantity >= item.stock
+                      ? "stock-low"
+                      : "stock-available"
+                  }
+                >
+                  {item.quantity >= item.stock
+                    ? "Maximum available quantity added"
+                    : `${item.stock - item.quantity} left in stock`}
+                </p>
 
                 <p>
                   Subtotal: ₹
@@ -123,62 +125,83 @@ const Cart = () => {
 
                 <div>
 
-<button
-  onClick={() =>
-    dispatch(
-      decreaseQuantity(item.id)
-    )
-  }
-  disabled={item.quantity === 1}
->
-  -
-</button>
+                  <button
+                    onClick={() =>
+                      dispatch(
+                        decreaseQuantity(item.id)
+                      )
+                    }
+                    disabled={item.quantity === 1}
+                  >
+                    -
+                  </button>
 
                   <span>
                     {item.quantity}
                   </span>
 
-<button
-  onClick={() =>
-    dispatch(
-      increaseQuantity(item.id)
-    )
-  }
-  disabled={item.quantity >= item.stock}
->
-  +
-</button>
+                  <button
+                    onClick={() =>
+                      dispatch(
+                        increaseQuantity(item.id)
+                      )
+                    }
+                    disabled={
+                      item.quantity >= item.stock
+                    }
+                  >
+                    +
+                  </button>
 
                 </div>
 
-<button
-  onClick={() => {
-    const confirmed = window.confirm(
-      "Are you sure you want to remove this item from your cart?"
-    )
+                {/* Remove Item */}
+                <button
+                  onClick={() => {
+                    const confirmed =
+                      window.confirm(
+                        "Are you sure you want to remove this item from your cart?"
+                      )
 
-    if (confirmed) {
-      dispatch(removeFromCart(item.id))
-    }
-  }}
->
-  Remove
-</button>
+                    if (confirmed) {
+                      dispatch(
+                        removeFromCart(item.id)
+                      )
 
-<button
-  onClick={() => {
-    const confirmed = window.confirm(
-      "Move this item to your wishlist?"
-    )
+                      toast.success(
+                        "Item removed from cart"
+                      )
+                    }
+                  }}
+                >
+                  Remove
+                </button>
 
-    if (confirmed) {
-      dispatch(addToWishlist(item))
-      dispatch(removeFromCart(item.id))
-    }
-  }}
->
-  Move to Wishlist
-</button>
+                {/* Move To Wishlist */}
+                <button
+                  onClick={() => {
+                    const confirmed =
+                      window.confirm(
+                        "Move this item to your wishlist?"
+                      )
+
+                    if (confirmed) {
+                      dispatch(
+                        addToWishlist(item)
+                      )
+
+                      dispatch(
+                        removeFromCart(item.id)
+                      )
+
+                      toast.success(
+                        "Item moved to wishlist"
+                      )
+                    }
+                  }}
+                >
+                  Move to Wishlist
+                </button>
 
               </div>
 
@@ -221,15 +244,15 @@ const Cart = () => {
               </span>
             </div>
 
-<div className="summary-row">
-  <span>
-    You Saved
-  </span>
+            <div className="summary-row">
+              <span>
+                You Saved
+              </span>
 
-  <span>
-    ₹{totalSavings.toFixed(2)}
-  </span>
-</div>
+              <span>
+                ₹{totalSavings.toFixed(2)}
+              </span>
+            </div>
 
             <div className="summary-total">
               <span>
@@ -241,10 +264,22 @@ const Cart = () => {
               </span>
             </div>
 
+            {/* Clear Cart */}
             <button
-              onClick={() =>
-                dispatch(clearCart())
-              }
+              onClick={() => {
+                const confirmed =
+                  window.confirm(
+                    "Are you sure you want to clear your cart?"
+                  )
+
+                if (confirmed) {
+                  dispatch(clearCart())
+
+                  toast.success(
+                    "Cart cleared successfully"
+                  )
+                }
+              }}
             >
               Clear Cart
             </button>
