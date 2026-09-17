@@ -165,19 +165,20 @@ const Cart = () => {
   Remove
 </button>
 
-                <button
-                  onClick={() => {
-                    dispatch(
-                      addToWishlist(item)
-                    )
+<button
+  onClick={() => {
+    const confirmed = window.confirm(
+      "Move this item to your wishlist?"
+    )
 
-                    dispatch(
-                      removeFromCart(item.id)
-                    )
-                  }}
-                >
-                  Move to Wishlist
-                </button>
+    if (confirmed) {
+      dispatch(addToWishlist(item))
+      dispatch(removeFromCart(item.id))
+    }
+  }}
+>
+  Move to Wishlist
+</button>
 
               </div>
 
