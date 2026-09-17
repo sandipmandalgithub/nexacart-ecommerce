@@ -18,38 +18,51 @@ const Checkout = () => {
 
   const totalPrice = cartItems.reduce(
     (total, item) =>
-      total + item.price * item.quantity,0
+      total + item.price * item.quantity,
+    0
   )
+
+  const shipping = totalPrice > 0 ? 50 : 0
+
+  const grandTotal = totalPrice + shipping
 
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [address, setAddress] = useState("")
   const [phone, setPhone] = useState("")
-  const [orderPlaced, setOrderPlaced] = useState(false)
 
+  const [orderPlaced, setOrderPlaced] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
 
   if (orderPlaced) {
-  return (
-    <div className="success-container">
-      <div className="success-icon">✅</div>
+    return (
+      <div className="success-container">
 
-      <h1>Order Placed Successfully!</h1>
+        <div className="success-icon">
+          ✅
+        </div>
 
-      <p>
-        Thank you for your purchase.Your order has been placed successfully.
-      </p>
+        <h1>
+          Order Placed Successfully!
+        </h1>
 
-      <Link to="/products">
-        Continue Shopping
-      </Link>
-    </div>
-  )
-}
+        <p>
+          Thank you for your purchase.
+          Your order has been placed successfully.
+        </p>
 
-  // If cart is empty
+        <Link to="/products">
+          Continue Shopping
+        </Link>
+
+      </div>
+    )
+  }
+
   if (cartItems.length === 0) {
     return (
       <div className="checkout-container">
+
         <h1>
           Your Cart is Empty
         </h1>
@@ -62,11 +75,11 @@ const Checkout = () => {
         <Link to="/products">
           Continue Shopping
         </Link>
+
       </div>
     )
   }
 
-  // Place order
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -80,6 +93,28 @@ const Checkout = () => {
       return
     }
 
+    if (name.trim().length < 3) {
+      alert("Please enter a valid name")
+      return
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      alert("Please enter a valid email address")
+      return
+    }
+
+    if (address.trim().length < 10) {
+      alert("Please enter a complete delivery address")
+      return
+    }
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+      alert("Please enter a valid 10-digit phone number")
+      return
+    }
+
+    setIsProcessing(true)
+
     dispatch(clearCart())
 
     setOrderPlaced(true)
@@ -87,6 +122,7 @@ const Checkout = () => {
 
   return (
     <div className="checkout-container">
+
       <h1>
         Checkout
       </h1>
@@ -95,8 +131,8 @@ const Checkout = () => {
         Complete your order
       </p>
 
-      {/* Order Summary */}
       <div className="checkout-summary">
+
         <h2>
           Order Summary
         </h2>
@@ -106,6 +142,7 @@ const Checkout = () => {
             className="checkout-item"
             key={item.id}
           >
+
             <span>
               {item.title} × {item.quantity}
             </span>
@@ -113,19 +150,52 @@ const Checkout = () => {
             <span>
               ₹{item.price * item.quantity}
             </span>
+
           </div>
         ))}
 
-        <h3>
-          Total: ₹{totalPrice}
-        </h3>
+        <div className="summary-row">
+
+          <span>
+            Subtotal
+          </span>
+
+          <span>
+            ₹{totalPrice}
+          </span>
+
+        </div>
+
+        <div className="summary-row">
+
+          <span>
+            Shipping
+          </span>
+
+          <span>
+            ₹{shipping}
+          </span>
+
+        </div>
+
+        <div className="summary-total">
+
+          <span>
+            Grand Total
+          </span>
+
+          <span>
+            ₹{grandTotal}
+          </span>
+
+        </div>
+
       </div>
 
-      {/* Customer Information */}
-      <form
-        onSubmit={handleSubmit}
-      >
+      <form onSubmit={handleSubmit}>
+
         <div>
+
           <label>
             Full Name
           </label>
@@ -137,10 +207,13 @@ const Checkout = () => {
               setName(e.target.value)
             }
             placeholder="Enter your full name"
+            required
           />
+
         </div>
 
         <div>
+
           <label>
             Email
           </label>
@@ -152,10 +225,13 @@ const Checkout = () => {
               setEmail(e.target.value)
             }
             placeholder="Enter your email"
+            required
           />
+
         </div>
 
         <div>
+
           <label>
             Phone Number
           </label>
@@ -163,14 +239,25 @@ const Checkout = () => {
           <input
             type="tel"
             value={phone}
-            onChange={(e) =>
-              setPhone(e.target.value)
-            }
+            onChange={(e) => {
+              const value = e.target.value
+
+              if (
+                /^\d*$/.test(value) &&
+                value.length <= 10
+              ) {
+                setPhone(value)
+              }
+            }}
             placeholder="Enter your phone number"
+            maxLength="10"
+            required
           />
+
         </div>
 
         <div>
+
           <label>
             Address
           </label>
@@ -181,13 +268,22 @@ const Checkout = () => {
               setAddress(e.target.value)
             }
             placeholder="Enter your delivery address"
+            required
           />
+
         </div>
 
-        <button type="submit">
-          Place Order
+        <button
+          type="submit"
+          disabled={isProcessing}
+        >
+          {isProcessing
+            ? "Processing Order..."
+            : "Place Order"}
         </button>
+
       </form>
+
     </div>
   )
 }

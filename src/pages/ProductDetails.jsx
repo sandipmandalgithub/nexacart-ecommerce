@@ -1,4 +1,8 @@
-import { Link, useParams } from "react-router-dom"
+import {
+  Link,
+  useParams,
+  useNavigate
+} from "react-router-dom"
 import { useEffect, useState } from "react"
 import {
   useDispatch,
@@ -14,6 +18,7 @@ import {
 const ProductDetails = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -194,6 +199,21 @@ const ProductDetails = () => {
   {product.stock === 0
     ? "Out of Stock"
     : "Add To Cart"}
+</button>
+
+<button
+  onClick={() => {
+    for (let i = 0; i < quantity; i++) {
+      dispatch(addToCart(product))
+    }
+
+    navigate("/checkout")
+  }}
+  disabled={product.stock === 0}
+>
+  {product.stock === 0
+    ? "Out of Stock"
+    : "Buy Now"}
 </button>
 
         <button
