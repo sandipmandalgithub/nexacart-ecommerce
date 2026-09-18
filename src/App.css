@@ -884,6 +884,8 @@ body {
 ================================ */
 
 .hero-section {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -891,14 +893,32 @@ body {
   padding: 96px 48px;
   margin-bottom: 72px;
   border-radius: 16px;
-  background: linear-gradient(
-    135deg,
-    #f5f7ff,
-    #eef2ff
-  );
+  border: 1px solid rgba(79, 70, 229, 0.08);
+  background-color: #eef2ff;
+  background-image:
+    radial-gradient(ellipse 80% 62% at 12% 0%, rgba(99, 102, 241, 0.16), transparent 60%),
+    radial-gradient(ellipse 72% 64% at 100% 108%, rgba(79, 70, 229, 0.12), transparent 58%),
+    linear-gradient(135deg, #f7f8ff 0%, #eef1ff 46%, #e8ecff 100%);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 12px 40px -24px rgba(79, 70, 229, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(79, 70, 229, 0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 62% 62% at 50% 38%, #000, transparent 76%);
+  mask-image: radial-gradient(ellipse 62% 62% at 50% 38%, #000, transparent 76%);
+  pointer-events: none;
 }
 
 .hero-content {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 760px;
   margin: 0 auto;
