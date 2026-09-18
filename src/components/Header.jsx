@@ -23,10 +23,8 @@ const Header = () => {
 
       <Link to="/" className="logo" aria-label="NexaCart home">
         <span className="logo-mark" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 5h2l1.5 11.5a1 1 0 0 0 1 .9h8.2a1 1 0 0 0 1-.8L20 8H7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            <circle cx="9.5" cy="20" r="1.3" fill="currentColor"/>
-            <circle cx="17.5" cy="20" r="1.3" fill="currentColor"/>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.5 17V7.6a.6.6 0 0 1 1.05-.4l8.9 9.6a.6.6 0 0 0 1.05-.4V7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </span>
         <h2>NexaCart</h2>

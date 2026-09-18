@@ -2524,16 +2524,16 @@ body {
   align-items: center;
   justify-content: center;
 
-  width: 34px;
-  height: 34px;
-
-  border-radius: 10px;
-
-  background: linear-gradient(135deg, #4f46e5 0%, #0f0f12 100%);
+  width: 36px;
+  height: 36px;
+  
+  border-radius: 11px;
+  
+  background: linear-gradient(150deg, #4f46e5 0%, #312e81 100%);
   color: #fff;
-
-  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);
-}
+  
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
 
 .header .logo h2 {
   margin: 0;
